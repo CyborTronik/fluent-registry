@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <groupId>com.github.cybortronik</groupId>
+
+    <artifactId>fluent-registry</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <java.version>1.8</java.version>
+
+        <databases.path>/var/tmp/databases</databases.path>
+        <mysql.jdbc.version>5.1.37</mysql.jdbc.version>
+        <db-image.name>mariadb:5.5</db-image.name>
+        <db-image.volume>${databases.path}/registry:/var/lib/mysql</db-image.volume>
+        <db-image.log>port: 3306</db-image.log>
+
+        <docker-maven-plugin.version>0.13.6</docker-maven-plugin.version>
+        <guice.version>4.0</guice.version>
+        <cucumber.version>1.2.3</cucumber.version>
+        <joda-time.version>2.8.1</joda-time.version>
+        <junit.version>4.12</junit.version>
+        <owner.version>1.0.9</owner.version>
+    </properties>
+    <modules>
+        <module>database</module>
+        <module>bean</module>
+        <module>repository</module>
+        <module>service</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.jdbc.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <!-- or whatever version you use -->
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>skip-integration-test-data-creation</id>
+            <activation>
+                <property>
+                    <name>skipITs</name>
+                </property>
+            </activation>
+            <properties>
+                <skip-integration-test-data-creation>true</skip-integration-test-data-creation>
+                <skip-integration-test>true</skip-integration-test>
+                <docker-plugin-phase>none</docker-plugin-phase>
+            </properties>
+        </profile>
+    </profiles>
+</project>
