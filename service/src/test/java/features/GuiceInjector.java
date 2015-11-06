@@ -1,5 +1,6 @@
 package features;
 
+import com.github.cybortronik.registry.RegistryModule;
 import com.github.cybortronik.registry.repository.sql2o.Sql2oModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -19,6 +20,6 @@ public class GuiceInjector implements InjectorSource {
     @Override
     public Injector getInjector() {
         Sql2oModule sql2oModule = new Sql2oModule(JDBC_URL, USERNAME, PASSWORD);
-        return Guice.createInjector(Stage.PRODUCTION, CucumberModules.SCENARIO, sql2oModule);
+        return Guice.createInjector(Stage.PRODUCTION, CucumberModules.SCENARIO, sql2oModule, new RegistryModule());
     }
 }

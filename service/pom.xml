@@ -36,6 +36,24 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bitbucket.b_c</groupId>
+            <artifactId>jose4j</artifactId>
+            <version>0.4.4</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>${guice.version}</version>
@@ -137,27 +155,24 @@
                     <skip>${skip-integration-test-data-creation}</skip>
                     <images>
                         <image>
-                            <alias>postgres</alias>
-                            <name>postgres:9.3</name>
+                            <alias>registry-db</alias>
+                            <name>${db-image.name}</name>
                             <run>
                                 <namingStrategy>alias</namingStrategy>
-                                <env>
-                                    <POSTGRES_USER>postgres</POSTGRES_USER>
-                                    <POSTGRES_PASSWORD>postgres</POSTGRES_PASSWORD>
-                                </env>
                                 <ports>
-                                    <port>15432:5432</port>
+                                    <port>15432:3306</port>
                                 </ports>
                                 <volumes>
                                     <bind>
-                                        <volumes>${databases.path}/registry:/var/lib/postgresql</volumes>
+                                        <volume>${db-image.volume}</volume>
                                     </bind>
                                 </volumes>
                                 <wait>
-                                    <log>PostgreSQL init process complete; ready for start up.</log>
-                                    <time>20000</time>
+                                    <log>${db-image.log}</log>
+                                    <time>120000</time>
                                 </wait>
                                 <log>
+
                                 </log>
                             </run>
                         </image>
