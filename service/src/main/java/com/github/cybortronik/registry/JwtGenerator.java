@@ -1,7 +1,6 @@
 package com.github.cybortronik.registry;
 
 import com.github.cybortronik.registry.bean.User;
-import com.github.cybortronik.registry.jwt.JsonKeyLoader;
 import org.jose4j.jws.AlgorithmIdentifiers;
 import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.jwt.JwtClaims;
@@ -9,8 +8,6 @@ import org.jose4j.lang.JoseException;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.PrivateKey;
 
 import static com.github.cybortronik.registry.jwt.JwtClaimsBuilder.asJwtClaims;
@@ -24,15 +21,9 @@ public class JwtGenerator {
     private JsonTransformer jsonTransformer;
 
     @Inject
-    public JwtGenerator(JsonTransformer jsonTransformer) throws IOException, JoseException {
+    public JwtGenerator(JsonTransformer jsonTransformer, PrivateKey privateKey) throws IOException, JoseException {
         this.jsonTransformer = jsonTransformer;
-        privateKey = loadPrivateKey();
-    }
-
-    private PrivateKey loadPrivateKey() throws IOException, JoseException {
-        String filePathToKey = System.getProperty("key.path");
-        Path keyFilePath = Paths.get(filePathToKey);
-        return new JsonKeyLoader().loadPrivateKeyFromPath(keyFilePath);
+        this.privateKey = privateKey;
     }
 
     public String generateToken(User user) throws JoseException {

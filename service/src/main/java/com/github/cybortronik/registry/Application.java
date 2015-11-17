@@ -14,11 +14,13 @@ public class Application {
     public static final String ACCEPT_TYPE = "application/json";
 
     public static void main(String[] args) {
-        Injector injector = Guice.createInjector(new Sql2oModule(), new RegistryModule());
+        Injector injector = Guice.createInjector(new Sql2oModule(), new SecurityModule(), new RegistryModule());
         JsonTransformer jsonTransformer = injector.getInstance(JsonTransformer.class);
 
         AuthController authController = injector.getInstance(AuthController.class);
         post("/login", ACCEPT_TYPE, (authController::login), jsonTransformer::toJson);
+
+        before("/users/*", (authController::authenticate));
 
 
         UsersController usersController = injector.getInstance(UsersController.class);

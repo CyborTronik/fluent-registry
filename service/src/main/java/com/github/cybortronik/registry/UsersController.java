@@ -1,6 +1,7 @@
 package com.github.cybortronik.registry;
 
 import com.github.cybortronik.registry.bean.User;
+import com.github.cybortronik.registry.bean.UserRequest;
 import com.github.cybortronik.registry.exception.InvalidRequestException;
 import com.github.cybortronik.registry.service.UserService;
 import spark.Request;
@@ -17,10 +18,12 @@ import static org.eclipse.jetty.util.StringUtil.isBlank;
 public class UsersController {
 
     private UserService userService;
+    private JsonTransformer jsonTransformer;
 
     @Inject
-    public UsersController(UserService userService) {
+    public UsersController(UserService userService, JsonTransformer jsonTransformer) {
         this.userService = userService;
+        this.jsonTransformer = jsonTransformer;
     }
 
     public List<User> getUsers(Request request, Response response) {
@@ -36,7 +39,8 @@ public class UsersController {
     }
 
     public User createUser(Request request, Response response) {
-        return null;
+        UserRequest userRequest = jsonTransformer.fromJson(request.body(), UserRequest.class);
+        return userService.createUser(userRequest);
     }
 
     public User updateUser(Request request, Response response) {

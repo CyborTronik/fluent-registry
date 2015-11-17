@@ -4,6 +4,7 @@ import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.jwt.JwtClaimsAdapter;
 import com.github.cybortronik.registry.jwt.JwtReader;
 import com.jayway.restassured.response.Response;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.java.guice.ScenarioScoped;
@@ -39,7 +40,7 @@ public class RESTStepdefs {
     @Then("^response contains: (.*)$")
     public void responseContains(String text) {
         String result = response.asString();
-        assertTrue(result.contains(text));
+        assertTrue("Current result doesn't contain requested text. Check please result: " + result, result.contains(text));
     }
 
     @When("login as (.*) with password '(.*)'")
@@ -62,11 +63,17 @@ public class RESTStepdefs {
 
     @Then("JWT email is (.*)")
     public void checkJwtEmail(String email) {
-        assertEquals(email, user.getEmail());
+        assertEquals("Email not matched, user has " + user.getEmail(), email, user.getEmail());
     }
 
     @Then("JWT contains role (.*)")
     public void checkJwtRole(String role) {
         assertTrue("User doesn't have the role: " + role, user.hasRole(role));
+    }
+
+    @When("request user creation for: (.*) with password \"(.*)\" as (.*)")
+    public void creteUser(String email, String password, String displayName) {
+        String jsonBody = format("{ \"email\": \"%s\", \"password\": \"%s\", \"confirmPassword\": \"%s\", \"displayName\":\"%s\" }", email, password, password, displayName);
+        response = given().body(jsonBody).put("/users");
     }
 }

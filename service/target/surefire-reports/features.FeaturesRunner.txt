@@ -1,0 +1,126 @@
+-------------------------------------------------------------------------------
+Test set: features.FeaturesRunner
+-------------------------------------------------------------------------------
+Tests run: 37, Failures: 6, Errors: 2, Skipped: 3, Time elapsed: 2.894 sec <<< FAILURE!
+And JWT contains role USER(Scenario: JWT content)  Time elapsed: 0.003 sec  <<< FAILURE!
+java.lang.AssertionError: User doesn't have the role: USER
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at features.RESTStepdefs.checkJwtRole(RESTStepdefs.java:71)
+	at ✽.And JWT contains role USER(features/login.feature:25)
+
+Scenario: JWT content  Time elapsed: 0.003 sec  <<< FAILURE!
+java.lang.AssertionError: User doesn't have the role: USER
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at features.RESTStepdefs.checkJwtRole(RESTStepdefs.java:71)
+	at ✽.And JWT contains role USER(features/login.feature:25)
+
+Then response code is 401(Scenario: Create user without being logged in)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: Expected status code <401> doesn't match actual status code <200>.
+
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:57)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:553)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:691)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$this$2$validateResponseIfRequired$1.callCurrent(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:105)
+	at com.jayway.restassured.specification.ResponseSpecification$statusCode$1.callCurrent(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:113)
+	at com.jayway.restassured.specification.ResponseSpecification$statusCode$0.call(Unknown Source)
+	at com.jayway.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy:64)
+	at features.RESTStepdefs.checkResponseCode(RESTStepdefs.java:54)
+	at ✽.Then response code is 401(features/user/create.feature:9)
+
+Scenario: Create user without being logged in  Time elapsed: 0.001 sec  <<< FAILURE!
+java.lang.AssertionError: Expected status code <401> doesn't match actual status code <200>.
+
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:57)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:553)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:691)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$this$2$validateResponseIfRequired$1.callCurrent(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:105)
+	at com.jayway.restassured.specification.ResponseSpecification$statusCode$1.callCurrent(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:113)
+	at com.jayway.restassured.specification.ResponseSpecification$statusCode$0.call(Unknown Source)
+	at com.jayway.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy:64)
+	at features.RESTStepdefs.checkResponseCode(RESTStepdefs.java:54)
+	at ✽.Then response code is 401(features/user/create.feature:9)
+
+Then response code is 401(Scenario: Create user without manager role)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: Expected status code <401> doesn't match actual status code <200>.
+
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:553)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:691)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$this$2$validateResponseIfRequired$1.callCurrent(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:105)
+	at com.jayway.restassured.specification.ResponseSpecification$statusCode$1.callCurrent(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:113)
+	at com.jayway.restassured.specification.ResponseSpecification$statusCode$0.call(Unknown Source)
+	at com.jayway.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy:64)
+	at features.RESTStepdefs.checkResponseCode(RESTStepdefs.java:54)
+	at ✽.Then response code is 401(features/user/create.feature:15)
+
+Scenario: Create user without manager role  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: Expected status code <401> doesn't match actual status code <200>.
+
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
+	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
+	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:553)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:691)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl$this$2$validateResponseIfRequired$1.callCurrent(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:105)
+	at com.jayway.restassured.specification.ResponseSpecification$statusCode$1.callCurrent(Unknown Source)
+	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:113)
+	at com.jayway.restassured.specification.ResponseSpecification$statusCode$0.call(Unknown Source)
+	at com.jayway.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy:64)
+	at features.RESTStepdefs.checkResponseCode(RESTStepdefs.java:54)
+	at ✽.Then response code is 401(features/user/create.feature:15)
+
+And stanislav@trifan.com has manager role(Scenario: Create user with manager role)  Time elapsed: 0.001 sec  <<< ERROR!
+org.apache.commons.lang3.NotImplementedException: Not implemented role functionality
+	at com.github.cybortronik.registry.service.UserServiceImpl.addRoleToUser(UserServiceImpl.java:63)
+	at features.DatabaseStepdefs.addUserRole(DatabaseStepdefs.java:36)
+	at ✽.And stanislav@trifan.com has manager role(features/user/create.feature:20)
+
+Scenario: Create user with manager role  Time elapsed: 0.001 sec  <<< ERROR!
+org.apache.commons.lang3.NotImplementedException: Not implemented role functionality
+	at com.github.cybortronik.registry.service.UserServiceImpl.addRoleToUser(UserServiceImpl.java:63)
+	at features.DatabaseStepdefs.addUserRole(DatabaseStepdefs.java:36)
+	at ✽.And stanislav@trifan.com has manager role(features/user/create.feature:20)
+

@@ -1,0 +1,7 @@
+features/GuiceInjector.class
+com/github/cybortronik/registry/JwtGeneratorTest.class
+features/FeaturesRunner.class
+features/RESTStepdefs.class
+features/FeaturesModule$1.class
+features/DatabaseStepdefs.class
+features/FeaturesModule.class

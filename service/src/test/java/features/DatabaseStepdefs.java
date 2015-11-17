@@ -29,4 +29,10 @@ public class DatabaseStepdefs {
     public void createAccount(String email, String password) {
         userService.createUser(email, email, password);
     }
+
+
+    @Given("(.*) has (.*) role")
+    public void addUserRole(String email, String role) {
+        userService.addRoleToUser(role, email);
+    }
 }

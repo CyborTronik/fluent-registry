@@ -2,6 +2,9 @@ package com.github.cybortronik.registry.service;
 
 import com.github.cybortronik.registry.bean.Login;
 import com.github.cybortronik.registry.bean.User;
+import com.github.cybortronik.registry.bean.UserRequest;
+
+import java.util.UUID;
 
 /**
  * Created by stanislav on 10/28/15.
@@ -13,5 +16,9 @@ public interface UserService {
 
     User find(Login login);
 
-    void createUser(String displayName, String email, String password);
+    UUID createUser(String displayName, String email, String password);
+
+    User createUser(UserRequest userRequest);
+
+    void addRoleToUser(String role, String email);
 }

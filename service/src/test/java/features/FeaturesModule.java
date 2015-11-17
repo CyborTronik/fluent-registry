@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 
 import static org.junit.Assert.assertNotNull;
@@ -28,8 +29,28 @@ public class FeaturesModule extends AbstractModule {
         try {
             PublicKey key = new JsonKeyLoader().loadPublicKey(Paths.get(keyUrl.toURI()));
             bind(JwtReader.class).toInstance(new JwtReader(key));
+            bindDummyPrivateKey();
         } catch (URISyntaxException | JoseException | IOException e) {
             throw new RuntimeException("Cannot load public key", e);
         }
+    }
+
+    private void bindDummyPrivateKey() {
+        bind(PrivateKey.class).toInstance(new PrivateKey() {
+            @Override
+            public String getAlgorithm() {
+                return null;
+            }
+
+            @Override
+            public String getFormat() {
+                return null;
+            }
+
+            @Override
+            public byte[] getEncoded() {
+                return new byte[0];
+            }
+        });
     }
 }

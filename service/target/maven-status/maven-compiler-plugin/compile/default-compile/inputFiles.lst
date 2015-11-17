@@ -1,0 +1,16 @@
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/bean/Login.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/AuthController.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/service/UserService.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/Application.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/RegistryModule.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/JsonTransformer.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/bean/UserRequest.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/JwtGenerator.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/exception/RegistryException.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/UsersController.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/exception/InvalidRequestException.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/exception/ValidationException.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/RegistryProperties.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/bean/LoginToken.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/SecurityModule.java
+/home/stanislav/workspace/fluent-registry/service/src/main/java/com/github/cybortronik/registry/service/UserServiceImpl.java
