@@ -12,4 +12,6 @@ public interface UserService {
     User findById(String uuid);
 
     User find(Login login);
+
+    void createUser(String displayName, String email, String password);
 }

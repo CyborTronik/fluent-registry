@@ -1,6 +1,7 @@
 package features;
 
 import com.github.cybortronik.registry.service.UserService;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.runtime.java.guice.ScenarioScoped;
 
@@ -24,4 +25,8 @@ public class DatabaseStepdefs {
         userService.deleteAll();
     }
 
+    @Given("^having account (.*) with password '(.*)'$")
+    public void createAccount(String email, String password) {
+        userService.createUser(email, email, password);
+    }
 }

@@ -7,3 +7,9 @@ Feature: Login
   Scenario: Invalid credentials
     When login as stanislav@trifan.com with password 's3cr3t'
     Then response code is 401
+
+  Scenario: Existing account
+    Given having account stanislav@trifan.com with password 's3cr3t'
+    When login as stanislav@trifan.com with password 's3cr3t'
+    Then response code is 200
+    And response contains: jwt
