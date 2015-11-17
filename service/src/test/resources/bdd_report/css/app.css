@@ -1,0 +1,26 @@
+table thead {
+    align-content: center;
+    text-align: center;
+    vertical-align: text-top;
+    horiz-align: center;
+    border: medium;
+}
+
+p {
+    margin: 0px;
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+}
+
+.passed {
+    padding-bottom: 5pt;
+}
+
+.failed, .skipped {
+    padding: 5pt;
+}
+
+.failed {
+    margin-top: 5pt;
+    margin-bottom: 0.2em;
+}
