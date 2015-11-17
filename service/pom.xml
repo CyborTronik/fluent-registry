@@ -54,11 +54,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.bitbucket.b_c</groupId>
-            <artifactId>jose4j</artifactId>
-            <version>0.4.4</version>
+            <groupId>com.github.cybortronik</groupId>
+            <artifactId>fluent-registry-jwt</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
@@ -197,6 +196,11 @@
                                             <file>
                                                 <source>
                                                     ${project.build.directory}/${project.name}-${project.version}-jar-with-dependencies.jar
+                                                </source>
+                                            </file>
+                                            <file>
+                                                <source>
+                                                    ${project.build.directory}/classes/sample_rsa_private.key
                                                 </source>
                                             </file>
                                         </files>

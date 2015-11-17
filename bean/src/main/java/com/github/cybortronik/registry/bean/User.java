@@ -9,7 +9,7 @@ import java.util.Set;
 public class User extends Bean {
     private String displayName;
     private String email;
-    private String passwordHash;
+    private transient String passwordHash;
     private Set<String> roles = new HashSet<>();
 
     public String getDisplayName() {

@@ -7,8 +7,8 @@ import org.joda.time.DateTime;
  */
 public abstract class Bean {
     private String id;
-    private DateTime createdAt;
-    private DateTime updatedAt;
+    private transient DateTime createdAt;
+    private transient DateTime updatedAt;
     private boolean enabled;
 
     public String getId() {

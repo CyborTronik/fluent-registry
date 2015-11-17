@@ -1,12 +1,18 @@
 package features;
 
+import com.github.cybortronik.registry.bean.User;
+import com.github.cybortronik.registry.jwt.JwtClaimsAdapter;
+import com.github.cybortronik.registry.jwt.JwtReader;
 import com.jayway.restassured.response.Response;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.java.guice.ScenarioScoped;
 
+import javax.inject.Inject;
+
 import static com.jayway.restassured.RestAssured.given;
 import static java.lang.String.format;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -16,6 +22,14 @@ import static org.junit.Assert.assertTrue;
 public class RESTStepdefs {
 
     private Response response;
+    private JwtReader jwtReader;
+    private JwtClaimsAdapter jwtClaimsAdapter;
+    private User user;
+
+    @Inject
+    public RESTStepdefs(JwtReader jwtReader) {
+        this.jwtReader = jwtReader;
+    }
 
     @When("get (.*)")
     public void get(String url) {
@@ -37,5 +51,22 @@ public class RESTStepdefs {
     @Then("^response code is (\\d+)")
     public void checkResponseCode(int responseCode) {
         response.then().statusCode(responseCode);
+    }
+
+    @When("extract JWT details")
+    public void extractJwtDetails() {
+        String jwt = response.jsonPath().getString("jwt");
+        jwtClaimsAdapter = jwtReader.read(jwt);
+        user = jwtClaimsAdapter.readUser();
+    }
+
+    @Then("JWT email is (.*)")
+    public void checkJwtEmail(String email) {
+        assertEquals(email, user.getEmail());
+    }
+
+    @Then("JWT contains role (.*)")
+    public void checkJwtRole(String role) {
+        assertTrue("User doesn't have the role: " + role, user.hasRole(role));
     }
 }

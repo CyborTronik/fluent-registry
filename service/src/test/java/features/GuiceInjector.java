@@ -20,6 +20,6 @@ public class GuiceInjector implements InjectorSource {
     @Override
     public Injector getInjector() {
         Sql2oModule sql2oModule = new Sql2oModule(JDBC_URL, USERNAME, PASSWORD);
-        return Guice.createInjector(Stage.PRODUCTION, CucumberModules.SCENARIO, sql2oModule, new RegistryModule());
+        return Guice.createInjector(Stage.PRODUCTION, CucumberModules.SCENARIO, sql2oModule, new RegistryModule(), new FeaturesModule());
     }
 }

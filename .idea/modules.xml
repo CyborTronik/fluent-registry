@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/database/database.iml" filepath="$PROJECT_DIR$/database/database.iml" />
       <module fileurl="file://$PROJECT_DIR$/fluent-registry.iml" filepath="$PROJECT_DIR$/fluent-registry.iml" />
       <module fileurl="file://$PROJECT_DIR$/bean/fluent-registry-bean.iml" filepath="$PROJECT_DIR$/bean/fluent-registry-bean.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jwt/fluent-registry-jwt.iml" filepath="$PROJECT_DIR$/jwt/fluent-registry-jwt.iml" />
       <module fileurl="file://$PROJECT_DIR$/repository/contract/fluent-registry-repository.iml" filepath="$PROJECT_DIR$/repository/contract/fluent-registry-repository.iml" />
       <module fileurl="file://$PROJECT_DIR$/repository/fluent-registry-repository-parent.iml" filepath="$PROJECT_DIR$/repository/fluent-registry-repository-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/repository/sql2o/fluent-registry-repository-sql2o.iml" filepath="$PROJECT_DIR$/repository/sql2o/fluent-registry-repository-sql2o.iml" />

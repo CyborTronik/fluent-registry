@@ -4,6 +4,7 @@ import com.github.cybortronik.registry.bean.Login;
 import com.github.cybortronik.registry.bean.LoginToken;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.service.UserService;
+import org.jose4j.lang.JoseException;
 import spark.Request;
 import spark.Response;
 
@@ -27,7 +28,7 @@ public class AuthController {
         this.jwtGenerator = jwtGenerator;
     }
 
-    public LoginToken login(Request request, Response response) {
+    public LoginToken login(Request request, Response response) throws JoseException {
         String body = request.body();
         Login login = jsonTransformer.fromJson(body, Login.class);
         User user = userService.find(login);

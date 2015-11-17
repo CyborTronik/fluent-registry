@@ -52,11 +52,19 @@
         <processorPath useClasspath="true" />
         <module name="fluent-registry-repository-sql2o" />
       </profile>
+      <profile default="false" name="Annotation profile for fluent-registry-jwt" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="fluent-registry-jwt" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="database" target="1.8" />
       <module name="fluent-registry" target="1.8" />
       <module name="fluent-registry-bean" target="1.8" />
+      <module name="fluent-registry-jwt" target="1.8" />
       <module name="fluent-registry-repository" target="1.8" />
       <module name="fluent-registry-repository-parent" target="1.8" />
       <module name="fluent-registry-repository-sql2o" target="1.8" />
