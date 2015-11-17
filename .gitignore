@@ -7,9 +7,10 @@
 *.jar
 *.war
 *.ear
-.idea
+.idea/
 **/cucumber-report.json
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 *.iml
 **/targetcucumber-report.json
+**/target
