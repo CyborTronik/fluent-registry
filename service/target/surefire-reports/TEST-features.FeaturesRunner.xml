@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="37" failures="6" name="features.FeaturesRunner" time="0.02" errors="2" skipped="3">
+<testsuite tests="44" failures="4" name="features.FeaturesRunner" time="0.021" errors="4" skipped="3">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64"/>
     <property name="java.vm.version" value="25.65-b01"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="maven.multiModuleProjectDirectory" value="/home/stanislav/workspace/fluent-registry/service"/>
+    <property name="maven.multiModuleProjectDirectory" value="/home/stanislav/workspace/fluent-registry"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=":"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="unknown"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="/home/stanislav/workspace/fluent-registry/service"/>
+    <property name="user.dir" value="/home/stanislav/workspace/fluent-registry"/>
     <property name="java.runtime.version" value="1.8.0_65-b17"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="/usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/endorsed"/>
@@ -59,9 +59,30 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
+  <testcase classname="Scenario: List companies" name="Given no any company" time="0.001"/>
+  <testcase classname="Scenario: List companies" name="When list companies" time="0"/>
+  <testcase classname="Scenario: List companies" name="Then response code is 200" time="0"/>
+  <testcase classname="Scenario: List companies" name="And result list is empty" time="0.003">
+    <failure message="Current result doesn&apos;t contain requested text. Check please result: null" type="java.lang.AssertionError">java.lang.AssertionError: Current result doesn&apos;t contain requested text. Check please result: null
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at features.RESTStepdefs.responseContains(RESTStepdefs.java:43)
+	at features.RESTStepdefs.checkEmptyListResponse(RESTStepdefs.java:87)
+	at ✽.And result list is empty(features/company.feature:9)
+</failure>
+  </testcase>
+  <testcase classname="Scenario: List companies" name="Scenario: List companies" time="0.003">
+    <failure message="Current result doesn&apos;t contain requested text. Check please result: null" type="java.lang.AssertionError">java.lang.AssertionError: Current result doesn&apos;t contain requested text. Check please result: null
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at features.RESTStepdefs.responseContains(RESTStepdefs.java:43)
+	at features.RESTStepdefs.checkEmptyListResponse(RESTStepdefs.java:87)
+	at ✽.And result list is empty(features/company.feature:9)
+</failure>
+  </testcase>
   <testcase classname="Scenario: Invalid credentials" name="Given database has no users." time="0"/>
   <testcase classname="Scenario: Invalid credentials" name="When login as stanislav@trifan.com with password &apos;s3cr3t&apos;" time="0"/>
-  <testcase classname="Scenario: Invalid credentials" name="Then response code is 401" time="0"/>
+  <testcase classname="Scenario: Invalid credentials" name="Then response code is 401" time="0.001"/>
   <testcase classname="Scenario: Invalid credentials" name="Scenario: Invalid credentials" time="0.001"/>
   <testcase classname="Scenario: Existing account" name="Given database has no users." time="0"/>
   <testcase classname="Scenario: Existing account" name="Given having account stanislav@trifan.com with password &apos;s3cr3t&apos;" time="0"/>
@@ -76,7 +97,7 @@
   <testcase classname="Scenario: JWT content" name="And response contains: jwt" time="0"/>
   <testcase classname="Scenario: JWT content" name="When extract JWT details" time="0"/>
   <testcase classname="Scenario: JWT content" name="Then JWT email is stanislav@trifan.com" time="0"/>
-  <testcase classname="Scenario: JWT content" name="And JWT contains role USER" time="0.003">
+  <testcase classname="Scenario: JWT content" name="And JWT contains role USER" time="0">
     <failure message="User doesn&apos;t have the role: USER" type="java.lang.AssertionError">java.lang.AssertionError: User doesn&apos;t have the role: USER
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
@@ -84,138 +105,67 @@
 	at ✽.And JWT contains role USER(features/login.feature:25)
 </failure>
   </testcase>
-  <testcase classname="Scenario: JWT content" name="Scenario: JWT content" time="0.003">
+  <testcase classname="Scenario: JWT content" name="Scenario: JWT content" time="0">
     <failure message="User doesn&apos;t have the role: USER" type="java.lang.AssertionError">java.lang.AssertionError: User doesn&apos;t have the role: USER
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at features.RESTStepdefs.checkJwtRole(RESTStepdefs.java:71)
 	at ✽.And JWT contains role USER(features/login.feature:25)
 </failure>
+  </testcase>
+  <testcase classname="Scenario: List no roles" name="Given no roles in database." time="0">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at features.DatabaseStepdefs.deleteRoles(DatabaseStepdefs.java:50)
+	at ✽.Given no roles in database.(features/role.feature:5)
+</error>
+    <system-out>
+  Scenario: JWT content                                              &amp;#27;[90m# features/login.feature:18&amp;#27;[0m
+    &amp;#27;[32mGiven &amp;#27;[0m&amp;#27;[32mhaving account &amp;#27;[0m&amp;#27;[32m&amp;#27;[1mstanislav@trifan.com&amp;#27;[0m&amp;#27;[32m with password &apos;&amp;#27;[0m&amp;#27;[32m&amp;#27;[1ms3cr3t&amp;#27;[0m&amp;#27;[32m&apos;&amp;#27;[0m &amp;#27;[90m# DatabaseStepdefs.createAccount(String,String)&amp;#27;[0m
+    &amp;#27;[32mWhen &amp;#27;[0m&amp;#27;[32mlogin as &amp;#27;[0m&amp;#27;[32m&amp;#27;[1mstanislav@trifan.com&amp;#27;[0m&amp;#27;[32m with password &apos;&amp;#27;[0m&amp;#27;[32m&amp;#27;[1ms3cr3t&amp;#27;[0m&amp;#27;[32m&apos;&amp;#27;[0m        &amp;#27;[90m# RESTStepdefs.login(String,String)&amp;#27;[0m
+    &amp;#27;[32mThen &amp;#27;[0m&amp;#27;[32mresponse code is &amp;#27;[0m&amp;#27;[32m&amp;#27;[1m200&amp;#27;[0m                                        &amp;#27;[90m# RESTStepdefs.checkResponseCode(int)&amp;#27;[0m
+    &amp;#27;[32mAnd &amp;#27;[0m&amp;#27;[32mresponse contains: &amp;#27;[0m&amp;#27;[32m&amp;#27;[1mjwt&amp;#27;[0m                                       &amp;#27;[90m# RESTStepdefs.responseContains(String)&amp;#27;[0m
+    &amp;#27;[32mWhen &amp;#27;[0m&amp;#27;[32mextract JWT details&amp;#27;[0m                                         &amp;#27;[90m# RESTStepdefs.extractJwtDetails()&amp;#27;[0m
+    &amp;#27;[32mThen &amp;#27;[0m&amp;#27;[32mJWT email is &amp;#27;[0m&amp;#27;[32m&amp;#27;[1mstanislav@trifan.com&amp;#27;[0m                           &amp;#27;[90m# RESTStepdefs.checkJwtEmail(String)&amp;#27;[0m
+    &amp;#27;[31mAnd &amp;#27;[0m&amp;#27;[31mJWT contains role &amp;#27;[0m&amp;#27;[31m&amp;#27;[1mUSER&amp;#27;[0m                                       &amp;#27;[90m# RESTStepdefs.checkJwtRole(String)&amp;#27;[0m
+      &amp;#27;[31mjava.lang.AssertionError: User doesn&apos;t have the role: USER
+      	at org.junit.Assert.fail(Assert.java:88)
+      	at org.junit.Assert.assertTrue(Assert.java:41)
+      	at features.RESTStepdefs.checkJwtRole(RESTStepdefs.java:71)
+      	at ✽.And JWT contains role USER(features/login.feature:25)
+      &amp;#27;[0m
+Feature: Manage roles
+</system-out>
+  </testcase>
+  <testcase classname="Scenario: List no roles" name="Scenario: List no roles" time="0">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at features.DatabaseStepdefs.deleteRoles(DatabaseStepdefs.java:50)
+	at ✽.Given no roles in database.(features/role.feature:5)
+</error>
   </testcase>
   <testcase classname="Scenario: Create user without being logged in" name="Given database has no users." time="0"/>
   <testcase classname="Scenario: Create user without being logged in" name="When request user creation for: john@carter.com with password &quot;an0nymus&quot; as John Carter" time="0"/>
-  <testcase classname="Scenario: Create user without being logged in" name="Then response code is 401" time="0">
-    <failure message="Expected status code &lt;401&gt; doesn&apos;t match actual status code &lt;200&gt;.
-" type="java.lang.AssertionError">java.lang.AssertionError: Expected status code &lt;401&gt; doesn&apos;t match actual status code &lt;200&gt;.
-
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
-	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:57)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:553)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:691)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$this$2$validateResponseIfRequired$1.callCurrent(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:105)
-	at com.jayway.restassured.specification.ResponseSpecification$statusCode$1.callCurrent(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:113)
-	at com.jayway.restassured.specification.ResponseSpecification$statusCode$0.call(Unknown Source)
-	at com.jayway.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy:64)
-	at features.RESTStepdefs.checkResponseCode(RESTStepdefs.java:54)
-	at ✽.Then response code is 401(features/user/create.feature:9)
-</failure>
-  </testcase>
-  <testcase classname="Scenario: Create user without being logged in" name="Scenario: Create user without being logged in" time="0.001">
-    <failure message="Expected status code &lt;401&gt; doesn&apos;t match actual status code &lt;200&gt;.
-" type="java.lang.AssertionError">java.lang.AssertionError: Expected status code &lt;401&gt; doesn&apos;t match actual status code &lt;200&gt;.
-
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
-	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:57)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:553)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:691)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$this$2$validateResponseIfRequired$1.callCurrent(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:105)
-	at com.jayway.restassured.specification.ResponseSpecification$statusCode$1.callCurrent(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:113)
-	at com.jayway.restassured.specification.ResponseSpecification$statusCode$0.call(Unknown Source)
-	at com.jayway.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy:64)
-	at features.RESTStepdefs.checkResponseCode(RESTStepdefs.java:54)
-	at ✽.Then response code is 401(features/user/create.feature:9)
-</failure>
-  </testcase>
+  <testcase classname="Scenario: Create user without being logged in" name="Then response code is 401" time="0"/>
+  <testcase classname="Scenario: Create user without being logged in" name="Scenario: Create user without being logged in" time="0"/>
   <testcase classname="Scenario: Create user without manager role" name="Given database has no users." time="0"/>
   <testcase classname="Scenario: Create user without manager role" name="Given having account stanislav@trifan.com with password &apos;s3cr3t&apos;" time="0.001"/>
   <testcase classname="Scenario: Create user without manager role" name="And login as stanislav@trifan.com with password &apos;s3cr3t&apos;" time="0"/>
   <testcase classname="Scenario: Create user without manager role" name="When request user creation for: john@carter.com with password &quot;an0nymus&quot; as John Carter" time="0"/>
-  <testcase classname="Scenario: Create user without manager role" name="Then response code is 401" time="0">
-    <failure message="Expected status code &lt;401&gt; doesn&apos;t match actual status code &lt;200&gt;.
-" type="java.lang.AssertionError">java.lang.AssertionError: Expected status code &lt;401&gt; doesn&apos;t match actual status code &lt;200&gt;.
-
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
-	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:553)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:691)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$this$2$validateResponseIfRequired$1.callCurrent(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:105)
-	at com.jayway.restassured.specification.ResponseSpecification$statusCode$1.callCurrent(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:113)
-	at com.jayway.restassured.specification.ResponseSpecification$statusCode$0.call(Unknown Source)
-	at com.jayway.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy:64)
-	at features.RESTStepdefs.checkResponseCode(RESTStepdefs.java:54)
-	at ✽.Then response code is 401(features/user/create.feature:15)
-</failure>
-  </testcase>
-  <testcase classname="Scenario: Create user without manager role" name="Scenario: Create user without manager role" time="0">
-    <failure message="Expected status code &lt;401&gt; doesn&apos;t match actual status code &lt;200&gt;.
-" type="java.lang.AssertionError">java.lang.AssertionError: Expected status code &lt;401&gt; doesn&apos;t match actual status code &lt;200&gt;.
-
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
-	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:190)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:553)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:691)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl$this$2$validateResponseIfRequired$1.callCurrent(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:105)
-	at com.jayway.restassured.specification.ResponseSpecification$statusCode$1.callCurrent(Unknown Source)
-	at com.jayway.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:113)
-	at com.jayway.restassured.specification.ResponseSpecification$statusCode$0.call(Unknown Source)
-	at com.jayway.restassured.internal.ValidatableResponseImpl.statusCode(ValidatableResponseImpl.groovy:64)
-	at features.RESTStepdefs.checkResponseCode(RESTStepdefs.java:54)
-	at ✽.Then response code is 401(features/user/create.feature:15)
-</failure>
-  </testcase>
-  <testcase classname="Scenario: Create user with manager role" name="Given database has no users." time="0.001"/>
+  <testcase classname="Scenario: Create user without manager role" name="Then response code is 401" time="0.001"/>
+  <testcase classname="Scenario: Create user without manager role" name="Scenario: Create user without manager role" time="0.001"/>
+  <testcase classname="Scenario: Create user with manager role" name="Given database has no users." time="0"/>
   <testcase classname="Scenario: Create user with manager role" name="Given having account stanislav@trifan.com with password &apos;s3cr3t&apos;" time="0.001"/>
   <testcase classname="Scenario: Create user with manager role" name="And login as stanislav@trifan.com with password &apos;s3cr3t&apos;" time="0"/>
-  <testcase classname="Scenario: Create user with manager role" name="And stanislav@trifan.com has manager role" time="0.001">
+  <testcase classname="Scenario: Create user with manager role" name="And stanislav@trifan.com has manager role" time="0">
     <error message="Not implemented role functionality" type="org.apache.commons.lang3.NotImplementedException">org.apache.commons.lang3.NotImplementedException: Not implemented role functionality
 	at com.github.cybortronik.registry.service.UserServiceImpl.addRoleToUser(UserServiceImpl.java:63)
-	at features.DatabaseStepdefs.addUserRole(DatabaseStepdefs.java:36)
+	at features.DatabaseStepdefs.addUserRole(DatabaseStepdefs.java:40)
 	at ✽.And stanislav@trifan.com has manager role(features/user/create.feature:20)
 </error>
   </testcase>
-  <testcase classname="Scenario: Create user with manager role" name="Scenario: Create user with manager role" time="0.001">
+  <testcase classname="Scenario: Create user with manager role" name="Scenario: Create user with manager role" time="0">
     <error message="Not implemented role functionality" type="org.apache.commons.lang3.NotImplementedException">org.apache.commons.lang3.NotImplementedException: Not implemented role functionality
 	at com.github.cybortronik.registry.service.UserServiceImpl.addRoleToUser(UserServiceImpl.java:63)
-	at features.DatabaseStepdefs.addUserRole(DatabaseStepdefs.java:36)
+	at features.DatabaseStepdefs.addUserRole(DatabaseStepdefs.java:40)
 	at ✽.And stanislav@trifan.com has manager role(features/user/create.feature:20)
 </error>
   </testcase>
@@ -225,7 +175,7 @@
   <testcase classname="Scenario: Create user with manager role" name="Then response code is 200" time="0.002">
     <skipped/>
   </testcase>
-  <testcase classname="Scenario: Create user with manager role" name="And response contains: &quot;displayName&quot;:&quot;John Carter&quot;" time="0.002">
+  <testcase classname="Scenario: Create user with manager role" name="And response contains: &quot;displayName&quot;:&quot;John Carter&quot;" time="0.003">
     <skipped/>
   </testcase>
 </testsuite>

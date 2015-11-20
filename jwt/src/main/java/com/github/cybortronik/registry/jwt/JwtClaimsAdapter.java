@@ -1,6 +1,5 @@
 package com.github.cybortronik.registry.jwt;
 
-import com.fatboyindustrial.gsonjodatime.Converters;
 import com.github.cybortronik.registry.bean.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -140,9 +139,6 @@ public class JwtClaimsAdapter extends org.jose4j.jwt.JwtClaims {
     }
 
     private Gson buildGson() {
-        return Converters
-                .registerDateMidnight(Converters
-                        .registerLocalTime(Converters
-                                .registerDateTime(new GsonBuilder()))).create();
+        return new GsonBuilder().create();
     }
 }

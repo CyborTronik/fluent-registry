@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import java.security.PublicKey;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static spark.Spark.halt;
 
 /**
@@ -49,12 +50,16 @@ public class AuthController {
         User user  = request.session().attribute("user");
         if (user == null) {
             String jwt = request.headers("JWT");
-            JwtClaimsAdapter read = jwtReader.read(jwt);
-            if (read.getIssuer().equals("registry")){
-                request.session().attribute("user", read.readUser());
+            if (isNotBlank(jwt)) {
+                processJwtToken(request, jwt);
             } else {
                 halt(401, "You have no rights to this action");
             }
         }
+    }
+
+    private void processJwtToken(Request request, String jwt) throws MalformedClaimException {
+        JwtClaimsAdapter read = jwtReader.read(jwt);
+            request.session().attribute("user", read.readUser());
     }
 }

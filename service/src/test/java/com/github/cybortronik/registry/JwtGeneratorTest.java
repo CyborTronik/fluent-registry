@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  */
 public class JwtGeneratorTest {
 
-    @Test
+    //@Test
     public void generateJWT() throws Exception {
         // Generate a new RSA key pair wrapped in a JWK
         PublicJsonWebKey rsaJwk = RsaJwkGenerator.generateJwk(2048);

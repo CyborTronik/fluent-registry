@@ -7,9 +7,10 @@ com/github/cybortronik/registry/JwtGenerator.class
 com/github/cybortronik/registry/exception/ValidationException.class
 com/github/cybortronik/registry/AuthController.class
 com/github/cybortronik/registry/UsersController.class
+com/github/cybortronik/registry/CompaniesController.class
 com/github/cybortronik/registry/service/UserService.class
-com/github/cybortronik/registry/service/UserServiceImpl.class
 com/github/cybortronik/registry/Application.class
+com/github/cybortronik/registry/service/UserServiceImpl.class
 com/github/cybortronik/registry/exception/InvalidRequestException.class
 com/github/cybortronik/registry/JsonTransformer.class
 com/github/cybortronik/registry/RegistryModule.class

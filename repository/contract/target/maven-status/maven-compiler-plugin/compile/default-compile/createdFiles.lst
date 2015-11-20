@@ -1,2 +1,4 @@
 com/github/cybortronik/registry/repository/Repository.class
+com/github/cybortronik/registry/repository/CompanyRepository.class
 com/github/cybortronik/registry/repository/UserRepository.class
+com/github/cybortronik/registry/repository/RoleRepository.class

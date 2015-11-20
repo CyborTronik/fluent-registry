@@ -76,4 +76,14 @@ public class RESTStepdefs {
         String jsonBody = format("{ \"email\": \"%s\", \"password\": \"%s\", \"confirmPassword\": \"%s\", \"displayName\":\"%s\" }", email, password, password, displayName);
         response = given().body(jsonBody).put("/users");
     }
+
+    @When("list companies")
+    public void listCompanies() {
+        response = given().get("/companies");
+    }
+
+    @Then("result list is empty")
+    public void checkEmptyListResponse() {
+        responseContains("[]");
+    }
 }

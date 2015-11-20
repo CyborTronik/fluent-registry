@@ -20,8 +20,11 @@ public class Application {
         AuthController authController = injector.getInstance(AuthController.class);
         post("/login", ACCEPT_TYPE, (authController::login), jsonTransformer::toJson);
 
-        before("/users/*", (authController::authenticate));
+        before("/users", (authController::authenticate));
 
+
+        CompaniesController companiesController = injector.getInstance(CompaniesController.class);
+        get("/companies", ACCEPT_TYPE,(companiesController::getCompanies), jsonTransformer::toJson);
 
         UsersController usersController = injector.getInstance(UsersController.class);
         get("/users", ACCEPT_TYPE, (usersController::getUsers), jsonTransformer::toJson);

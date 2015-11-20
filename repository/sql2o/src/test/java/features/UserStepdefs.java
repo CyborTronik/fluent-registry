@@ -11,8 +11,7 @@ import cucumber.runtime.java.guice.ScenarioScoped;
 import javax.inject.Inject;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by stanislav on 10/28/15.
@@ -52,5 +51,15 @@ public class UserStepdefs {
     @And("^found user has password hash (.*)$")
     public void found_user_has_password_hash_qwertyhash(String passwordHash) {
         assertEquals(passwordHash, user.getPasswordHash());
+    }
+
+    @And("found user was created in less that 1 minute ago")
+    public void checkCreateTime() {
+        assertNotNull(user.getCreatedAt());
+    }
+
+    @And("found user is enabled")
+    public void checkUserIsEnabled() {
+        assertTrue(user.isEnabled());
     }
 }

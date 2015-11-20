@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="features.FeaturesRunner" time="0.419" errors="0" skipped="0">
+<testsuite tests="8" failures="0" name="features.FeaturesRunner" time="0.436" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre/lib/amd64"/>
@@ -67,5 +67,7 @@
   <testcase name="And find user by email: strifan@email.com" time="0"/>
   <testcase name="Then found user has name Stanislav Trifan" time="0"/>
   <testcase name="And found user has password hash qwertyhash" time="0"/>
-  <testcase name="Scenario: Create user" time="0"/>
+  <testcase name="And found user was created in less that 1 minute ago" time="0"/>
+  <testcase name="And found user is enabled" time="0"/>
+  <testcase name="Scenario: Create user" time="0.001"/>
 </testsuite>

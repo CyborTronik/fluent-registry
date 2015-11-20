@@ -9,3 +9,5 @@ Feature: CRUD for users
     And find user by email: strifan@email.com
     Then found user has name Stanislav Trifan
     And found user has password hash qwertyhash
+    And found user was created in less that 1 minute ago
+    And found user is enabled
