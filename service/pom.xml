@@ -209,6 +209,7 @@
                                 </assembly>
                             </build>
                             <run>
+                                <namingStrategy>alias</namingStrategy>
                                 <ports>
                                     <port>8080:4567</port>
                                 </ports>

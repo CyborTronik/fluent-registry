@@ -8,12 +8,15 @@ import com.github.cybortronik.registry.jwt.JwtReader;
 import com.github.cybortronik.registry.service.UserService;
 import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.lang.JoseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 
 import javax.inject.Inject;
 
 import java.security.PublicKey;
+import java.util.Set;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static spark.Spark.halt;
@@ -22,6 +25,8 @@ import static spark.Spark.halt;
  * Created by stanislav on 11/6/15.
  */
 public class AuthController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
     private UserService userService;
     private JsonTransformer jsonTransformer;
@@ -49,7 +54,11 @@ public class AuthController {
     public void authenticate(Request request, Response response) throws MalformedClaimException {
         User user  = request.session().attribute("user");
         if (user == null) {
+            Set<String> headers = request.headers();
+            String headersDesc = String.join(",", headers);
+            LOGGER.info("Requested headers: " + headersDesc);
             String jwt = request.headers("JWT");
+            LOGGER.info("Got JWT: " + jwt);
             if (isNotBlank(jwt)) {
                 processJwtToken(request, jwt);
             } else {
@@ -60,6 +69,6 @@ public class AuthController {
 
     private void processJwtToken(Request request, String jwt) throws MalformedClaimException {
         JwtClaimsAdapter read = jwtReader.read(jwt);
-            request.session().attribute("user", read.readUser());
+        request.session().attribute("user", read.readUser());
     }
 }

@@ -3,12 +3,14 @@ package features;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.jwt.JwtClaimsAdapter;
 import com.github.cybortronik.registry.jwt.JwtReader;
+import com.jayway.restassured.response.Header;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.java.guice.ScenarioScoped;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
@@ -22,7 +24,9 @@ import static org.junit.Assert.assertTrue;
  * Created by stanislav on 10/27/15.
  */
 @ScenarioScoped
-public class RESTStepdefs {
+public class RestStepdefs {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestStepdefs.class);
 
     private Response response;
     private JwtReader jwtReader;
@@ -31,7 +35,7 @@ public class RESTStepdefs {
     private String jwt;
 
     @Inject
-    public RESTStepdefs(JwtReader jwtReader) {
+    public RestStepdefs(JwtReader jwtReader) {
         this.jwtReader = jwtReader;
     }
 
@@ -46,8 +50,10 @@ public class RESTStepdefs {
     }
 
     private RequestSpecification call() {
-        if (isNotBlank(jwt))
-            return given().header("JWT", jwt);
+        if (isNotBlank(jwt)) {
+            LOGGER.info("Current JWT is " + jwt);
+            return given().header(new Header("JWT", jwt));
+        }
         return given();
     }
 
@@ -61,6 +67,7 @@ public class RESTStepdefs {
     public void login(String email, String password) {
         String body = format("{ \"email\": \"%s\", \"password\": \"%s\"  }", email, password);
         response = call().body(body).post("/login");
+        extractJwtDetails();
     }
 
     @Then("^response code is (\\d+)")
@@ -71,6 +78,7 @@ public class RESTStepdefs {
     @When("extract JWT details")
     public void extractJwtDetails() {
         jwt = response.jsonPath().getString("jwt");
+        LOGGER.info("Extracted JWT: " + jwt);
         jwtClaimsAdapter = jwtReader.read(jwt);
         user = jwtClaimsAdapter.readUser();
     }
