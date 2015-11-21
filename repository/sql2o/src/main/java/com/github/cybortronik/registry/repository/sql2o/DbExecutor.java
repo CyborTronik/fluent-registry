@@ -7,6 +7,7 @@ import org.sql2o.Query;
 import org.sql2o.Sql2o;
 
 import javax.inject.Inject;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -104,6 +105,17 @@ public class DbExecutor {
                     .executeAndFetchFirst(tClass);
             con.commit();
             return entity;
+        }
+    }
+
+    public <T> List<T> findScalars(String sql, Map<String, Object> params, Class<T> tClass) {
+        try (Connection con = sql2o.open()) {
+            Query query = con.createQuery(sql);
+            for (Map.Entry<String, Object> entry : params.entrySet())
+                query = query.addParameter(entry.getKey(), entry.getValue());
+            List<T> list = query.executeScalarList(tClass);
+            con.commit();
+            return list;
         }
     }
 }

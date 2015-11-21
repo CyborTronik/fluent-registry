@@ -16,6 +16,7 @@ import java.util.UUID;
  */
 public class UserServiceImpl implements UserService {
 
+    public static final String DEFAULT_RULE = "USER";
     private UserRepository userRepository;
     private PasswordEncryptor passwordEncryptor;
 
@@ -47,7 +48,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UUID createUser(String displayName, String email, String password) {
         String encryptedPassword = passwordEncryptor.encryptPassword(password);
-        return userRepository.createUser(displayName, email, encryptedPassword);
+        UUID userId = userRepository.createUser(displayName, email, encryptedPassword);
+        userRepository.addUserRole(userId.toString(), DEFAULT_RULE);
+        return userId;
     }
 
     @Override
@@ -60,7 +63,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addRoleToUser(String role, String email) {
-        throw new NotImplementedException("Not implemented role functionality");
+        User user = userRepository.findByEmail(email);
+        userRepository.addUserRole(user.getId(), role);
     }
 
 }

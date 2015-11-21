@@ -1,5 +1,6 @@
 package com.github.cybortronik.registry.bean;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,12 +41,12 @@ public class User extends Bean {
         return roles;
     }
 
-    public void setRoles(Set<String> roles) {
+    public void setRoles(Collection<String> roles) {
         if (roles == null) {
             roles = new HashSet<>();
             return;
         }
-        this.roles = roles;
+        this.roles = new HashSet<>(roles);
     }
 
     public void addRole(String role) {

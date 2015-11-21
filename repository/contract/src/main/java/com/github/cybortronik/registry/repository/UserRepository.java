@@ -12,4 +12,6 @@ public interface UserRepository extends Repository<User, String> {
     UUID createUser(String displayName, String email, String passwordHash);
 
     User findByEmail(String email);
+
+    void addUserRole(String userId, String role);
 }

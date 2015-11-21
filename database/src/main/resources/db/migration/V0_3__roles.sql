@@ -5,3 +5,14 @@ CREATE TABLE roles (
   updatedAt    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (name, enabled)
 );
+
+INSERT INTO roles(name, createdAt) VALUES
+('USER', NULL),
+('MANAGER', NULL),
+('ADMIN', NULL);
+
+CREATE TABLE user_roles (
+    user_id  VARCHAR(40),
+    role_name  VARCHAR(100),
+    PRIMARY KEY (user_id, role_name)
+);
