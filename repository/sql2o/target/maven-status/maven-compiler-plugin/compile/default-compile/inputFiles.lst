@@ -1,7 +1,0 @@
-/home/stanislav/workspace/fluent-registry/repository/sql2o/src/main/java/com/github/cybortronik/registry/repository/sql2o/Sql2oModule.java
-/home/stanislav/workspace/fluent-registry/repository/sql2o/src/main/java/com/github/cybortronik/registry/repository/sql2o/converters/OffsetDateTimeConverter.java
-/home/stanislav/workspace/fluent-registry/repository/sql2o/src/main/java/com/github/cybortronik/registry/repository/sql2o/converters/ConvertersProvider.java
-/home/stanislav/workspace/fluent-registry/repository/sql2o/src/main/java/com/github/cybortronik/registry/repository/sql2o/CompanyRepositoryImpl.java
-/home/stanislav/workspace/fluent-registry/repository/sql2o/src/main/java/com/github/cybortronik/registry/repository/sql2o/RoleRepositoryImpl.java
-/home/stanislav/workspace/fluent-registry/repository/sql2o/src/main/java/com/github/cybortronik/registry/repository/sql2o/UserRepositoryImpl.java
-/home/stanislav/workspace/fluent-registry/repository/sql2o/src/main/java/com/github/cybortronik/registry/repository/sql2o/DbExecutor.java

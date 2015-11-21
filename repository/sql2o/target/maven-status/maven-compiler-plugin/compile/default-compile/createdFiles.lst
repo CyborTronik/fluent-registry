@@ -1,7 +1,0 @@
-com/github/cybortronik/registry/repository/sql2o/CompanyRepositoryImpl.class
-com/github/cybortronik/registry/repository/sql2o/DbExecutor.class
-com/github/cybortronik/registry/repository/sql2o/converters/ConvertersProvider.class
-com/github/cybortronik/registry/repository/sql2o/UserRepositoryImpl.class
-com/github/cybortronik/registry/repository/sql2o/RoleRepositoryImpl.class
-com/github/cybortronik/registry/repository/sql2o/converters/OffsetDateTimeConverter.class
-com/github/cybortronik/registry/repository/sql2o/Sql2oModule.class
