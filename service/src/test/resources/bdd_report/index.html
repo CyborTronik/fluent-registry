@@ -257,7 +257,7 @@
         $.getJSON("cucumber-report.json", function (features) {
 
             features.forEach(computeFeatureStatistics);
-            features.forEach(computeImagePaths);
+            //features.forEach(computeImagePaths);
 
             var Router = Backbone.Router.extend({
                 routes: {

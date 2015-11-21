@@ -32,5 +32,11 @@ public class Application {
         put("/users", ACCEPT_TYPE, (usersController::createUser), jsonTransformer::toJson);
         post("/users", ACCEPT_TYPE, (usersController::updateUser), jsonTransformer::toJson);
         delete("/users", ACCEPT_TYPE, (usersController::deleteUser), jsonTransformer::toJson);
+
+
+        RoleController  roleController = injector.getInstance(RoleController.class);
+        get("/roles", ACCEPT_TYPE,(roleController::getRoles), jsonTransformer::toJson);
+        put("/roles", ACCEPT_TYPE,(roleController::create), jsonTransformer::toJson);
+        delete("/roles/:name", ACCEPT_TYPE,(roleController::delete), jsonTransformer::toJson);
     }
 }

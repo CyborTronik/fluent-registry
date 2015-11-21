@@ -22,7 +22,7 @@ formatter.match({
   "location": "UserStepdefs.deleteAllUsers()"
 });
 formatter.result({
-  "duration": 309548643,
+  "duration": 290166528,
   "status": "passed"
 });
 formatter.scenario({
@@ -81,7 +81,7 @@ formatter.match({
   "location": "UserStepdefs.createUser(String,String,String)"
 });
 formatter.result({
-  "duration": 19564442,
+  "duration": 21107449,
   "status": "passed"
 });
 formatter.match({
@@ -94,7 +94,7 @@ formatter.match({
   "location": "UserStepdefs.findUserByEmail(String)"
 });
 formatter.result({
-  "duration": 73477778,
+  "duration": 79544968,
   "status": "passed"
 });
 formatter.match({
@@ -107,7 +107,7 @@ formatter.match({
   "location": "UserStepdefs.found_user_has_name(String)"
 });
 formatter.result({
-  "duration": 137605,
+  "duration": 138623,
   "status": "passed"
 });
 formatter.match({
@@ -120,21 +120,21 @@ formatter.match({
   "location": "UserStepdefs.found_user_has_password_hash_qwertyhash(String)"
 });
 formatter.result({
-  "duration": 90399,
+  "duration": 89740,
   "status": "passed"
 });
 formatter.match({
   "location": "UserStepdefs.checkCreateTime()"
 });
 formatter.result({
-  "duration": 45649,
+  "duration": 60055,
   "status": "passed"
 });
 formatter.match({
   "location": "UserStepdefs.checkUserIsEnabled()"
 });
 formatter.result({
-  "duration": 47070,
+  "duration": 58236,
   "status": "passed"
 });
 });

@@ -1,6 +1,7 @@
 package com.github.cybortronik.registry.repository.sql2o;
 
 import com.github.cybortronik.registry.repository.CompanyRepository;
+import com.github.cybortronik.registry.repository.RoleRepository;
 import com.github.cybortronik.registry.repository.UserRepository;
 import com.google.inject.AbstractModule;
 import org.sql2o.Sql2o;
@@ -32,5 +33,6 @@ public class Sql2oModule extends AbstractModule {
         bind(DbExecutor.class);
         bind(UserRepository.class).to(UserRepositoryImpl.class);
         bind(CompanyRepository.class).to(CompanyRepositoryImpl.class);
+        bind(RoleRepository.class).to(RoleRepositoryImpl.class);
     }
 }

@@ -86,4 +86,14 @@ public class RESTStepdefs {
     public void checkEmptyListResponse() {
         responseContains("[]");
     }
+
+    @When("put (.*) with (.*)")
+    public void put(String url, String body) {
+        response = given().body(body).put(url);
+    }
+
+    @When("delete (.*)")
+    public void delete(String url) {
+        response = given().delete(url);
+    }
 }

@@ -1,5 +1,7 @@
 package com.github.cybortronik.registry;
 
+import com.github.cybortronik.registry.service.RoleService;
+import com.github.cybortronik.registry.service.RoleServiceImpl;
 import com.github.cybortronik.registry.service.UserService;
 import com.github.cybortronik.registry.service.UserServiceImpl;
 import com.google.inject.AbstractModule;
@@ -19,5 +21,8 @@ public class RegistryModule extends AbstractModule {
 
         bind(UserService.class).to(UserServiceImpl.class);
         bind(UsersController.class);
+
+        bind(RoleService.class).to(RoleServiceImpl.class);
+        bind(RoleController.class);
     }
 }
