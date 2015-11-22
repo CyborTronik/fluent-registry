@@ -60,4 +60,11 @@ public class User extends Bean {
     public boolean hasRole(String role) {
         return roles.contains(role);
     }
+
+    public boolean hasAnyRole(String... roles) {
+        for (String role : roles)
+            if (hasRole(role))
+                return true;
+        return false;
+    }
 }

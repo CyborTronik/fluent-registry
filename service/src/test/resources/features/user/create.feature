@@ -9,16 +9,25 @@ Feature: Create user
     When request user creation for: john@carter.com with password "an0nymus" as John Carter
     Then response code is 401
 
-  Scenario: Create user without manager role
+  Scenario: Create user having no rights for that
     Given having account stanislav@trifan.com with password 's3cr3t'
     And login as stanislav@trifan.com with password 's3cr3t'
     When request user creation for: john@carter.com with password "an0nymus" as John Carter
     Then response code is 401
 
-  Scenario: Create user with manager role
+  Scenario: Create user having rights
     Given having account stanislav@trifan.com with password 's3cr3t'
-    And stanislav@trifan.com has MANAGER role
+    And stanislav@trifan.com has MANAGE_USERS role
     And login as stanislav@trifan.com with password 's3cr3t'
     When request user creation for: john@carter.com with password "an0nymus" as John Carter
     Then response code is 200
     And response contains: "displayName":"John Carter"
+
+  Scenario: Create user with specific role
+    Given having account stanislav@trifan.com with password 's3cr3t'
+    And stanislav@trifan.com has MANAGE_USERS role
+    And login as stanislav@trifan.com with password 's3cr3t'
+    When put /users with { email:"john@carter.com", displayName:"John Carter", password: "password", passwordConfirmation: "password", roles: ["MANAGE_USERS"] }
+    Then response code is 200
+    And response contains: "displayName":"John Carter"
+    And response contains: MANAGE_USERS

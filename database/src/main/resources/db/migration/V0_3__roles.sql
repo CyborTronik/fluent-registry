@@ -7,9 +7,7 @@ CREATE TABLE roles (
 );
 
 INSERT INTO roles(name, createdAt) VALUES
-('USER', NULL),
-('MANAGER', NULL),
-('ADMIN', NULL);
+('MANAGE_USERS', NULL);
 
 CREATE TABLE user_roles (
     user_id  VARCHAR(40),

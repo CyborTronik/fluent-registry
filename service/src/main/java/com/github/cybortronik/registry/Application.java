@@ -1,5 +1,6 @@
 package com.github.cybortronik.registry;
 
+import com.github.cybortronik.registry.bean.Roles;
 import com.github.cybortronik.registry.repository.sql2o.Sql2oModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -20,8 +21,7 @@ public class Application {
         AuthController authController = injector.getInstance(AuthController.class);
         post("/login", ACCEPT_TYPE, (authController::login), jsonTransformer::toJson);
 
-        before("/users", (authController::authenticate));
-
+        before("/users", ((request, response) -> authController.authenticate(request, response, Roles.MANAGE_USERS)));
 
         CompaniesController companiesController = injector.getInstance(CompaniesController.class);
         get("/companies", ACCEPT_TYPE,(companiesController::getCompanies), jsonTransformer::toJson);

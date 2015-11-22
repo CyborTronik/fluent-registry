@@ -2,6 +2,7 @@ package com.github.cybortronik.registry;
 
 import com.github.cybortronik.registry.bean.Login;
 import com.github.cybortronik.registry.bean.LoginToken;
+import com.github.cybortronik.registry.bean.Roles;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.jwt.JwtClaimsAdapter;
 import com.github.cybortronik.registry.jwt.JwtReader;
@@ -14,9 +15,9 @@ import spark.Request;
 import spark.Response;
 
 import javax.inject.Inject;
-
-import java.security.PublicKey;
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static spark.Spark.halt;
@@ -50,6 +51,20 @@ public class AuthController {
         String token = jwtGenerator.generateToken(user);
         return new LoginToken(token);
     }
+    public void authenticate(Request request, Response response, Roles... roles) throws MalformedClaimException {
+        String[] rls = Arrays.stream(roles)
+                .map(Roles::toString)
+                .collect(Collectors.toList())
+                .toArray(new String[roles.length]);
+        authenticate(request, response, rls);
+    }
+
+    public void authenticate(Request request, Response response, String... roles) throws MalformedClaimException {
+        authenticate(request, response);
+        User user = request.session().attribute("user");
+        if (!user.hasAnyRole(roles))
+            halt(401, "You are not allowed to access this resource");
+    }
 
     public void authenticate(Request request, Response response) throws MalformedClaimException {
         User user  = request.session().attribute("user");
@@ -62,7 +77,7 @@ public class AuthController {
             if (isNotBlank(jwt)) {
                 processJwtToken(request, jwt);
             } else {
-                halt(401, "You have no rights to this action");
+                halt(401, "You have no rights to this action, please login in first.");
             }
         }
     }

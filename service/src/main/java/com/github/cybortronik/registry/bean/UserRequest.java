@@ -1,5 +1,7 @@
 package com.github.cybortronik.registry.bean;
 
+import java.util.List;
+
 /**
  * Created by stanislav on 11/17/15.
  */
@@ -8,7 +10,8 @@ public class UserRequest {
     private String displayName;
     private String email;
     private String password;
-    private String confirmPassword;
+    private String passwordConfirmation;
+    private List<String> roles;
 
     public String getDisplayName() {
         return displayName;
@@ -34,11 +37,19 @@ public class UserRequest {
         this.password = password;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
     }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

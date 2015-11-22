@@ -77,6 +77,8 @@ public class RestStepdefs {
 
     @When("extract JWT details")
     public void extractJwtDetails() {
+        if (!response.asString().contains("jwt"))
+            return;
         jwt = response.jsonPath().getString("jwt");
         LOGGER.info("Extracted JWT: " + jwt);
         jwtClaimsAdapter = jwtReader.read(jwt);
@@ -95,7 +97,7 @@ public class RestStepdefs {
 
     @When("request user creation for: (.*) with password \"(.*)\" as (.*)")
     public void creteUser(String email, String password, String displayName) {
-        String jsonBody = format("{ \"email\": \"%s\", \"password\": \"%s\", \"confirmPassword\": \"%s\", \"displayName\":\"%s\" }", email, password, password, displayName);
+        String jsonBody = format("{ \"email\": \"%s\", \"password\": \"%s\", \"passwordConfirmation\": \"%s\", \"displayName\":\"%s\" }", email, password, password, displayName);
         response = call().body(jsonBody).put("/users");
     }
 
