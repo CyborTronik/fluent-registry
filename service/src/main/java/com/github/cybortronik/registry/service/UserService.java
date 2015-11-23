@@ -24,4 +24,6 @@ public interface UserService {
     void addRoleToUser(String role, String email);
 
     User updateUser(String uuid, UserRequest request);
+
+    void delete(String uuid);
 }

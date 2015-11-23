@@ -79,4 +79,9 @@ public class UserServiceImpl implements UserService {
         return findById(uuid);
     }
 
+    @Override
+    public void delete(String uuid) {
+        userRepository.disableById(uuid);
+    }
+
 }

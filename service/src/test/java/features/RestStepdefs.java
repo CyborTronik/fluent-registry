@@ -145,6 +145,6 @@ public class RestStepdefs {
 
     @When("delete (.*)")
     public void delete(String url) {
-        response = call().delete(url);
+        response = call().delete(processUrl(url));
     }
 }

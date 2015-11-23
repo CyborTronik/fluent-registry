@@ -54,12 +54,21 @@ public class UsersController {
         String uuid = getUserUuid(request);
         UserRequest userRequest = jsonTransformer.fromJson(request.body(), UserRequest.class);
         User user = userService.updateUser(uuid, userRequest);
-        if (isNull(user))
-            halt(400, "User not found please check the request");
+        requiredUser(user);
         return user;
     }
 
-    public User deleteUser(Request request, Response response) {
-        return null;
+    private void requiredUser(User user) {
+        if (isNull(user))
+            halt(400, "User not found please check the request");
+    }
+
+    public String deleteUser(Request request, Response response) {
+        String uuid = getUserUuid(request);
+        userService.delete(uuid);
+        User user = userService.findById(uuid);
+        requiredUser(user);
+        halt(204);
+        return "";
     }
 }
