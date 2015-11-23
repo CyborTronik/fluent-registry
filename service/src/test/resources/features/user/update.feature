@@ -1,5 +1,4 @@
-Feature: Update user
-
+Feature: Update users
 
   Background: Setup database
     Given database has no users.

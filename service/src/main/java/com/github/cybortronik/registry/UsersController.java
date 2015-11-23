@@ -2,7 +2,6 @@ package com.github.cybortronik.registry;
 
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.bean.UserRequest;
-import com.github.cybortronik.registry.exception.InvalidRequestException;
 import com.github.cybortronik.registry.service.UserService;
 import spark.Request;
 import spark.Response;
@@ -34,7 +33,9 @@ public class UsersController {
 
     public User showUser(Request request, Response response) {
         String uuid = getUserUuid(request);
-        return userService.findById(uuid);
+        User user = userService.findById(uuid);
+        requiredUser(user);
+        return user;
     }
 
     private String getUserUuid(Request request) {

@@ -1,4 +1,4 @@
-Feature: Create user
+Feature: Create users
   As a manager I must be able to create new user
 
   Background: Setup database

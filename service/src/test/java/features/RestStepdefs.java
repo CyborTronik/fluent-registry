@@ -73,7 +73,7 @@ public class RestStepdefs {
 
     @When("get (.*)")
     public void get(String url) {
-        response = call().get(url);
+        response = call().get(processUrl(url));
     }
 
     private RequestSpecification call() {
@@ -140,7 +140,7 @@ public class RestStepdefs {
 
     @When("put (.*) with (.*)")
     public void put(String url, String body) {
-        response = call().body(body).put(url);
+        response = call().body(body).put(processUrl(url));
     }
 
     @When("delete (.*)")
