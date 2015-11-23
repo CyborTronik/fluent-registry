@@ -10,6 +10,8 @@ import org.jasypt.util.password.PasswordEncryptor;
 import javax.inject.Inject;
 import java.util.UUID;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 /**
  * Created by stanislav on 10/28/15.
  */
@@ -63,6 +65,18 @@ public class UserServiceImpl implements UserService {
     public void addRoleToUser(String role, String email) {
         User user = userRepository.findByEmail(email);
         userRepository.addUserRole(user.getId(), role);
+    }
+
+    @Override
+    public User updateUser(String uuid, UserRequest request) {
+        if (isNotBlank(request.getDisplayName()))
+            userRepository.updateDisplayName(uuid, request.getDisplayName());
+        if (isNotBlank(request.getEmail()))
+            userRepository.updateEmail(uuid, request.getEmail());
+        if (request.getRoles() != null) {
+            userRepository.setRoles(uuid, request.getRoles());
+        }
+        return findById(uuid);
     }
 
 }

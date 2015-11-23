@@ -6,13 +6,19 @@ import com.github.cybortronik.registry.jwt.JwtReader;
 import com.jayway.restassured.response.Header;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
+import cucumber.api.java.en.But;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.java.guice.ScenarioScoped;
+import org.apache.commons.lang3.text.StrSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import static com.jayway.restassured.RestAssured.given;
 import static java.lang.String.format;
@@ -33,10 +39,31 @@ public class RestStepdefs {
     private JwtClaimsAdapter jwtClaimsAdapter;
     private User user;
     private String jwt;
+    private Map<String, Object> variables = new HashMap<>();
 
     @Inject
     public RestStepdefs(JwtReader jwtReader) {
         this.jwtReader = jwtReader;
+    }
+
+    @When("have no variables")
+    public void clearVariables() {
+        variables.clear();
+    }
+
+    @But("persist userId variable")
+    public void persistUserId() {
+        variables.put("userId", user.getId());
+    }
+
+    @When("post (.*) with (.*)")
+    public void post(String url, String body) {
+        String preparedUrl = processUrl(url);
+        response = given().body(body).post(preparedUrl);
+    }
+
+    private String processUrl(String url) {
+        return new StrSubstitutor(variables).replace(url);
     }
 
     @When("clear received JWT")
@@ -51,7 +78,7 @@ public class RestStepdefs {
 
     private RequestSpecification call() {
         if (isNotBlank(jwt)) {
-            LOGGER.info("Current JWT is " + jwt);
+            LOGGER.trace("Current JWT is " + jwt);
             return given().header(new Header("JWT", jwt));
         }
         return given();
@@ -80,7 +107,7 @@ public class RestStepdefs {
         if (!response.asString().contains("jwt"))
             return;
         jwt = response.jsonPath().getString("jwt");
-        LOGGER.info("Extracted JWT: " + jwt);
+        LOGGER.trace("Extracted JWT: " + jwt);
         jwtClaimsAdapter = jwtReader.read(jwt);
         user = jwtClaimsAdapter.readUser();
     }

@@ -3,6 +3,7 @@ package com.github.cybortronik.registry.service;
 import com.github.cybortronik.registry.bean.Login;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.bean.UserRequest;
+import spark.Request;
 
 import java.util.UUID;
 
@@ -21,4 +22,6 @@ public interface UserService {
     User createUser(UserRequest userRequest);
 
     void addRoleToUser(String role, String email);
+
+    User updateUser(String uuid, UserRequest request);
 }

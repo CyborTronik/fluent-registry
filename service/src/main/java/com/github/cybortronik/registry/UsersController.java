@@ -10,7 +10,9 @@ import spark.Response;
 import javax.inject.Inject;
 import java.util.List;
 
+import static java.util.Objects.isNull;
 import static org.eclipse.jetty.util.StringUtil.isBlank;
+import static spark.Spark.halt;
 
 /**
  * Created by stanislav on 10/27/15.
@@ -31,11 +33,16 @@ public class UsersController {
     }
 
     public User showUser(Request request, Response response) {
+        String uuid = getUserUuid(request);
+        return userService.findById(uuid);
+    }
+
+    private String getUserUuid(Request request) {
         String uuid = request.params(":uuid");
         if (isBlank(uuid)) {
-            throw new InvalidRequestException("Cannot find a user without identifier");
+            halt(400, "Cannot find a user without identifier");
         }
-        return userService.findById(uuid);
+        return uuid;
     }
 
     public User createUser(Request request, Response response) {
@@ -44,7 +51,12 @@ public class UsersController {
     }
 
     public User updateUser(Request request, Response response) {
-        return null;
+        String uuid = getUserUuid(request);
+        UserRequest userRequest = jsonTransformer.fromJson(request.body(), UserRequest.class);
+        User user = userService.updateUser(uuid, userRequest);
+        if (isNull(user))
+            halt(400, "User not found please check the request");
+        return user;
     }
 
     public User deleteUser(Request request, Response response) {
