@@ -37,3 +37,11 @@ Feature: Update users
     When post /users/${userId} with { displayName: "Stanislav Trifan Ivan",  email: "Stanislav@Trifan.mail", roles: ["USER", "ADMIN"]  }
     Then response code is 200
     And response contains: "displayName":"Stanislav Trifan Ivan","email":"Stanislav@Trifan.mail","roles":["ADMIN","USER"]
+
+  Scenario: Change user password
+    When post /users/${userId} with { password: "test", passwordConfirmation: "test" }
+    Then response code is 200
+    And response contains: "email":"stanislav@trifan.com"
+    When login as stanislav@trifan.com with password 'test'
+    Then response code is 200
+    And response contains: jwt

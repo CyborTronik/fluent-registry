@@ -118,4 +118,15 @@ public class DbExecutor {
             return list;
         }
     }
+
+    public <T> List<T> find(String sql, Map<String, Object> params, Class<T> tClass) {
+        try (Connection con = sql2o.open()) {
+            Query query = con.createQuery(sql);
+            for (Map.Entry<String, Object> entry : params.entrySet())
+                query = query.addParameter(entry.getKey(), entry.getValue());
+            List<T> list = query.executeAndFetch(tClass);
+            con.commit();
+            return list;
+        }
+    }
 }

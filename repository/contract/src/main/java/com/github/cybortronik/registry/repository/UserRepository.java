@@ -21,4 +21,8 @@ public interface UserRepository extends Repository<User, String> {
     void updateEmail(String uuid, String email);
 
     void setRoles(String uuid, List<String> roles);
+
+    void setPasswordHash(String uuid, String passwordHash);
+
+    List<User> filter(UserFilter userFilter);
 }

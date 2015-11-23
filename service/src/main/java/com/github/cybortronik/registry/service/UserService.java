@@ -3,8 +3,10 @@ package com.github.cybortronik.registry.service;
 import com.github.cybortronik.registry.bean.Login;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.bean.UserRequest;
+import com.github.cybortronik.registry.repository.UserFilter;
 import spark.Request;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -26,4 +28,6 @@ public interface UserService {
     User updateUser(String uuid, UserRequest request);
 
     void delete(String uuid);
+
+    List<User> filter(UserFilter userFilter);
 }

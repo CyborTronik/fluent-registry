@@ -1,6 +1,7 @@
 package com.github.cybortronik.registry;
 
 import com.github.cybortronik.registry.bean.User;
+import com.github.cybortronik.registry.repository.UserFilter;
 import com.github.cybortronik.registry.bean.UserRequest;
 import com.github.cybortronik.registry.service.UserService;
 import spark.Request;
@@ -28,7 +29,12 @@ public class UsersController {
     }
 
     public List<User> getUsers(Request request, Response response) {
-        return null;
+        UserFilter userFilter = extractUserFilter(request);
+        return userService.filter(userFilter);
+    }
+
+    private UserFilter extractUserFilter(Request request) {
+        return new UserFilter();
     }
 
     public User showUser(Request request, Response response) {

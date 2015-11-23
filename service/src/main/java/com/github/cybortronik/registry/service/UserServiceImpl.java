@@ -4,10 +4,12 @@ import com.github.cybortronik.registry.bean.Login;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.bean.UserRequest;
 import com.github.cybortronik.registry.exception.ValidationException;
+import com.github.cybortronik.registry.repository.UserFilter;
 import com.github.cybortronik.registry.repository.UserRepository;
 import org.jasypt.util.password.PasswordEncryptor;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.UUID;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -52,13 +54,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(UserRequest userRequest) {
-        if (!userRequest.getPassword().equals(userRequest.getPasswordConfirmation()))
-            throw new ValidationException("Passwords doesn't match");
+        passwordsMustMatch(userRequest);
         UUID uuid = createUser(userRequest.getDisplayName(), userRequest.getEmail(), userRequest.getPassword());
         String userId = uuid.toString();
         if (userRequest.getRoles() != null)
             userRequest.getRoles().forEach(role -> userRepository.addUserRole(userId, role));
         return findById(userId);
+    }
+
+    private void passwordsMustMatch(UserRequest userRequest) {
+        if (!userRequest.getPassword().equals(userRequest.getPasswordConfirmation()))
+            throw new ValidationException("Passwords doesn't match");
     }
 
     @Override
@@ -73,8 +79,12 @@ public class UserServiceImpl implements UserService {
             userRepository.updateDisplayName(uuid, request.getDisplayName());
         if (isNotBlank(request.getEmail()))
             userRepository.updateEmail(uuid, request.getEmail());
-        if (request.getRoles() != null) {
+        if (request.getRoles() != null)
             userRepository.setRoles(uuid, request.getRoles());
+        if (isNotBlank(request.getPassword())) {
+            passwordsMustMatch(request);
+            String encryptedPassword = passwordEncryptor.encryptPassword(request.getPassword());
+            userRepository.setPasswordHash(uuid, encryptedPassword);
         }
         return findById(uuid);
     }
@@ -82,6 +92,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(String uuid) {
         userRepository.disableById(uuid);
+    }
+
+    @Override
+    public List<User> filter(UserFilter userFilter) {
+        return userRepository.filter(userFilter);
     }
 
 }

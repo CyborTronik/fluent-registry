@@ -1,10 +1,13 @@
 package com.github.cybortronik.registry.repository.sql2o;
 
 import com.github.cybortronik.registry.bean.User;
+import com.github.cybortronik.registry.repository.UserFilter;
 import com.github.cybortronik.registry.repository.UserRepository;
 
 import javax.inject.Inject;
 import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * Created by stanislav on 10/28/15.
@@ -88,11 +91,48 @@ public class UserRepositoryImpl implements UserRepository {
         List<String> currentRoles = fetchRoles(uuid);
         List<String> rolesToDelete = new ArrayList<>(currentRoles);
         rolesToDelete.removeAll(roles);
-        rolesToDelete.forEach(role-> deleteRole(uuid, role));
+        rolesToDelete.forEach(role -> deleteRole(uuid, role));
 
         List<String> rolesToAdd = new ArrayList<>(roles);
         rolesToAdd.removeAll(currentRoles);
-        rolesToAdd.forEach(role->addUserRole(uuid, role));
+        rolesToAdd.forEach(role -> addUserRole(uuid, role));
+    }
+
+    @Override
+    public void setPasswordHash(String uuid, String passwordHash) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", uuid);
+        params.put("passwordHash", passwordHash);
+        dbExecutor.execute("update users set passwordHash=:passwordHash where id = :id", params);
+    }
+
+    @Override
+    public List<User> filter(UserFilter userFilter) {
+        if (userFilter.getItemsPerPage() <= 0)
+            throw new IllegalArgumentException("Cannot filter for items less or equals to zero");
+        Map<String, Object> params = prepareParams(userFilter);
+        String sql = "select * from users ";
+        for (Map.Entry<String, Object> entry : params.entrySet())
+            sql += " AND " + entry.getKey() + " like '%" + entry.getValue() + "%' ";
+        if (isNotBlank(userFilter.getSortBy()))
+            sql += " ORDER BY " + filterInjection(userFilter.getSortBy());
+        sql += " LIMIT " + userFilter.getItemsPerPage() + "," + userFilter.getPage() * userFilter.getItemsPerPage();
+        return dbExecutor.find(sql, params, User.class);
+    }
+
+    private String filterInjection(String text) {
+        //Do not allow to split commands
+        //Very basic injector checker
+        return text.replaceAll(";", "").replaceAll("DELIMITER", "").replaceAll("//", "");
+    }
+
+    private Map<String, Object> prepareParams(UserFilter userFilter) {
+        Map<String, Object> params = new HashMap<>();
+        if (isNotBlank(userFilter.getDisplayName()))
+            params.put("displayName", filterInjection(userFilter.getDisplayName()));
+        if (isNotBlank(userFilter.getEmail()))
+            params.put("email", filterInjection(userFilter.getEmail()));
+        return params;
     }
 
     private void deleteRole(String uuid, String role) {
