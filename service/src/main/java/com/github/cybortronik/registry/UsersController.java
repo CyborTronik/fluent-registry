@@ -34,7 +34,15 @@ public class UsersController {
     }
 
     private UserFilter extractUserFilter(Request request) {
-        return new UserFilter();
+        UserFilter userFilter = new UserFilter();
+        userFilter.setDisplayName(request.queryParams("displayName"));
+        userFilter.setEmail(request.queryParams("email"));
+        userFilter.setSortBy(request.queryParams("sortBy"));
+        if (request.queryParams("page") != null)
+            userFilter.setPage(Integer.getInteger(request.queryParams("page")));
+        if (request.queryParams("itemsPerPage") != null)
+            userFilter.setItemsPerPage(Integer.getInteger(request.queryParams("itemsPerPage")));
+        return userFilter;
     }
 
     public User showUser(Request request, Response response) {

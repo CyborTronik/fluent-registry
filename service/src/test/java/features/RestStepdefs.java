@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -146,5 +147,11 @@ public class RestStepdefs {
     @When("delete (.*)")
     public void delete(String url) {
         response = call().delete(processUrl(url));
+    }
+
+    @Then("response list counts (.*)")
+    public void checkListSize(int count) {
+        List<String> emails = response.jsonPath().getList("email");
+        assertEquals(count, emails.size());
     }
 }

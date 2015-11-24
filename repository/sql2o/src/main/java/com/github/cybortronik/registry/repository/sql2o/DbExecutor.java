@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static java.lang.String.format;
+import static java.util.Objects.nonNull;
 
 /**
  * Created by stanislav on 10/28/15.
@@ -123,7 +124,7 @@ public class DbExecutor {
         try (Connection con = sql2o.open()) {
             Query query = con.createQuery(sql);
             for (Map.Entry<String, Object> entry : params.entrySet())
-                query = query.addParameter(entry.getKey(), entry.getValue());
+                    query = query.addParameter(entry.getKey(), entry.getValue());
             List<T> list = query.executeAndFetch(tClass);
             con.commit();
             return list;

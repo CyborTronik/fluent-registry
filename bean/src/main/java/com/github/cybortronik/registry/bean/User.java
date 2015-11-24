@@ -11,7 +11,7 @@ public class User extends Bean {
     private String displayName;
     private String email;
     private transient String passwordHash;
-    private Set<String> roles = new HashSet<>();
+    private Set<String> roles;
 
     public String getDisplayName() {
         return displayName;
@@ -50,18 +50,23 @@ public class User extends Bean {
     }
 
     public void addRole(String role) {
+        if (roles == null)
+            roles = new HashSet<>();
         roles.add(role);
     }
 
     public void removeRole(String role) {
-        roles.remove(role);
+        if (roles != null)
+            roles.remove(role);
     }
 
     public boolean hasRole(String role) {
-        return roles.contains(role);
+        return roles != null && roles.contains(role);
     }
 
     public boolean hasAnyRole(String... roles) {
+        if (roles == null)
+            return false;
         for (String role : roles)
             if (hasRole(role))
                 return true;

@@ -3,6 +3,8 @@ package com.github.cybortronik.registry.repository.sql2o;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.repository.UserFilter;
 import com.github.cybortronik.registry.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -13,6 +15,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
  * Created by stanislav on 10/28/15.
  */
 public class UserRepositoryImpl implements UserRepository {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserRepositoryImpl.class);
 
     public static final String TABLE_NAME = "users";
     private DbExecutor dbExecutor;
@@ -108,7 +111,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> filter(UserFilter userFilter) {
-        if (userFilter.getItemsPerPage() <= 0)
+        int limit = userFilter.getItemsPerPage();
+        if (limit <= 0)
             throw new IllegalArgumentException("Cannot filter for items less or equals to zero");
         Map<String, Object> params = prepareParams(userFilter);
         String sql = "select * from users ";
@@ -116,7 +120,9 @@ public class UserRepositoryImpl implements UserRepository {
             sql += " AND " + entry.getKey() + " like '%" + entry.getValue() + "%' ";
         if (isNotBlank(userFilter.getSortBy()))
             sql += " ORDER BY " + filterInjection(userFilter.getSortBy());
-        sql += " LIMIT " + userFilter.getItemsPerPage() + "," + userFilter.getPage() * userFilter.getItemsPerPage();
+        int offset = userFilter.getPage() * limit;
+        sql += " LIMIT " + offset + "," + limit;
+        LOGGER.trace("Generated SQL: " + sql);
         return dbExecutor.find(sql, params, User.class);
     }
 
