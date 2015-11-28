@@ -1,5 +1,6 @@
-package com.github.cybortronik.registry;
+package com.github.cybortronik.registry.controller;
 
+import com.github.cybortronik.registry.JsonTransformer;
 import com.github.cybortronik.registry.bean.Role;
 import com.github.cybortronik.registry.service.RoleService;
 import spark.Request;

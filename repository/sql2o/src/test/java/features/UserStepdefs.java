@@ -1,6 +1,7 @@
 package features;
 
 import com.github.cybortronik.registry.bean.User;
+import com.github.cybortronik.registry.repository.UserFilter;
 import com.github.cybortronik.registry.repository.UserRepository;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -9,6 +10,7 @@ import cucumber.api.java.en.When;
 import cucumber.runtime.java.guice.ScenarioScoped;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -21,6 +23,7 @@ public class UserStepdefs {
 
     private UserRepository userRepository;
     private User user;
+    private List<User> userList;
 
     @Inject
     public UserStepdefs(UserRepository userRepository) {
@@ -61,5 +64,19 @@ public class UserStepdefs {
     @And("found user is enabled")
     public void checkUserIsEnabled() {
         assertTrue(user.isEnabled());
+    }
+
+
+    @When("list users ordered by display name (.*)")
+    public void listUsersOrderedByDisplayName(String orderDirection) {
+        UserFilter userFilter = new UserFilter();
+        userFilter.setSortBy("displayName " + orderDirection);
+        userList = userRepository.filter(userFilter);
+    }
+
+    @Then("user number (.*) has display name (.*)")
+    public void checkUserForIndex(int index, String displayName) {
+        User user = userList.get(index - 1);
+        assertEquals(displayName, user.getDisplayName());
     }
 }

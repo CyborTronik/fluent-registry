@@ -1,5 +1,7 @@
 package com.github.cybortronik.registry;
 
+import com.github.cybortronik.registry.controller.RoleController;
+import com.github.cybortronik.registry.controller.UsersController;
 import com.github.cybortronik.registry.service.RoleService;
 import com.github.cybortronik.registry.service.RoleServiceImpl;
 import com.github.cybortronik.registry.service.UserService;
@@ -24,5 +26,7 @@ public class RegistryModule extends AbstractModule {
 
         bind(RoleService.class).to(RoleServiceImpl.class);
         bind(RoleController.class);
+
+        bind(UrlDecoder.class);
     }
 }

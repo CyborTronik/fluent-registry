@@ -1,9 +1,15 @@
 package com.github.cybortronik.registry;
 
 import com.github.cybortronik.registry.bean.Roles;
+import com.github.cybortronik.registry.controller.AuthController;
+import com.github.cybortronik.registry.controller.CompaniesController;
+import com.github.cybortronik.registry.controller.RoleController;
+import com.github.cybortronik.registry.controller.UsersController;
 import com.github.cybortronik.registry.repository.sql2o.Sql2oModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static spark.Spark.*;
 
@@ -11,6 +17,8 @@ import static spark.Spark.*;
  * Created by stanislav on 10/26/15.
  */
 public class Application {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
     public static final String ACCEPT_TYPE = "application/json";
 
@@ -34,7 +42,7 @@ public class Application {
         delete("/users/:uuid", ACCEPT_TYPE, (usersController::deleteUser), jsonTransformer::toJson);
 
 
-        RoleController  roleController = injector.getInstance(RoleController.class);
+        RoleController roleController = injector.getInstance(RoleController.class);
         get("/roles", ACCEPT_TYPE,(roleController::getRoles), jsonTransformer::toJson);
         put("/roles", ACCEPT_TYPE,(roleController::create), jsonTransformer::toJson);
         delete("/roles/:name", ACCEPT_TYPE,(roleController::delete), jsonTransformer::toJson);

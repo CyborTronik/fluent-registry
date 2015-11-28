@@ -1,5 +1,7 @@
-package com.github.cybortronik.registry;
+package com.github.cybortronik.registry.controller;
 
+import com.github.cybortronik.registry.JsonTransformer;
+import com.github.cybortronik.registry.UrlDecoder;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.repository.UserFilter;
 import com.github.cybortronik.registry.bean.UserRequest;
@@ -21,11 +23,13 @@ public class UsersController {
 
     private UserService userService;
     private JsonTransformer jsonTransformer;
+    private UrlDecoder urlDecoder;
 
     @Inject
-    public UsersController(UserService userService, JsonTransformer jsonTransformer) {
+    public UsersController(UserService userService, JsonTransformer jsonTransformer, UrlDecoder urlDecoder) {
         this.userService = userService;
         this.jsonTransformer = jsonTransformer;
+        this.urlDecoder = urlDecoder;
     }
 
     public List<User> getUsers(Request request, Response response) {
@@ -35,13 +39,27 @@ public class UsersController {
 
     private UserFilter extractUserFilter(Request request) {
         UserFilter userFilter = new UserFilter();
-        userFilter.setDisplayName(request.queryParams("displayName"));
-        userFilter.setEmail(request.queryParams("email"));
-        userFilter.setSortBy(request.queryParams("sortBy"));
-        if (request.queryParams("page") != null)
-            userFilter.setPage(Integer.getInteger(request.queryParams("page")));
-        if (request.queryParams("itemsPerPage") != null)
-            userFilter.setItemsPerPage(Integer.getInteger(request.queryParams("itemsPerPage")));
+
+        String displayName = request.queryParams("displayName");
+        displayName = urlDecoder.decode(displayName);
+        userFilter.setDisplayName(displayName);
+
+        String email = request.queryParams("email");
+        email = urlDecoder.decode(email);
+        userFilter.setEmail(email);
+
+        String sortBy = request.queryParams("sortBy");
+        sortBy = urlDecoder.decode(sortBy);
+        userFilter.setSortBy(sortBy);
+
+        String page = request.queryParams("page");
+        if (page != null)
+            userFilter.setPage(Integer.getInteger(page));
+
+        String itemsPerPage = request.queryParams("itemsPerPage");
+        if (itemsPerPage != null)
+            userFilter.setLimit(Integer.getInteger(itemsPerPage));
+
         return userFilter;
     }
 

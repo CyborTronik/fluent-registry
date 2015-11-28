@@ -111,34 +111,26 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> filter(UserFilter userFilter) {
-        int limit = userFilter.getItemsPerPage();
+        int limit = userFilter.getLimit();
         if (limit <= 0)
             throw new IllegalArgumentException("Cannot filter for items less or equals to zero");
-        Map<String, Object> params = prepareParams(userFilter);
-        String sql = "select * from users ";
-        for (Map.Entry<String, Object> entry : params.entrySet())
-            sql += " AND " + entry.getKey() + " like '%" + entry.getValue() + "%' ";
+        String sql = "select * from users where 1=1 ";
+        if (isNotBlank(userFilter.getDisplayName()))
+            sql += " AND displayName like '%" + filterInjection(userFilter.getDisplayName()) + "%' ";
+        if (isNotBlank(userFilter.getEmail()))
+            sql += " AND email like '%" + filterInjection(userFilter.getEmail()) + "%' ";
         if (isNotBlank(userFilter.getSortBy()))
             sql += " ORDER BY " + filterInjection(userFilter.getSortBy());
         int offset = userFilter.getPage() * limit;
         sql += " LIMIT " + offset + "," + limit;
         LOGGER.trace("Generated SQL: " + sql);
-        return dbExecutor.find(sql, params, User.class);
+        return dbExecutor.find(sql, new HashMap<>(), User.class);
     }
 
     private String filterInjection(String text) {
         //Do not allow to split commands
         //Very basic injector checker
         return text.replaceAll(";", "").replaceAll("DELIMITER", "").replaceAll("//", "");
-    }
-
-    private Map<String, Object> prepareParams(UserFilter userFilter) {
-        Map<String, Object> params = new HashMap<>();
-        if (isNotBlank(userFilter.getDisplayName()))
-            params.put("displayName", filterInjection(userFilter.getDisplayName()));
-        if (isNotBlank(userFilter.getEmail()))
-            params.put("email", filterInjection(userFilter.getEmail()));
-        return params;
     }
 
     private void deleteRole(String uuid, String role) {

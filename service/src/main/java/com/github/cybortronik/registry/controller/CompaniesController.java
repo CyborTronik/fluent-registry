@@ -1,4 +1,4 @@
-package com.github.cybortronik.registry;
+package com.github.cybortronik.registry.controller;
 
 import com.github.cybortronik.registry.bean.Company;
 import spark.Request;

@@ -75,6 +75,7 @@ public class RestStepdefs {
     @When("get (.*)")
     public void get(String url) {
         response = call().get(processUrl(url));
+        LOGGER.info(response.asString());
     }
 
     private RequestSpecification call() {
@@ -151,7 +152,13 @@ public class RestStepdefs {
 
     @Then("response list counts (.*)")
     public void checkListSize(int count) {
-        List<String> emails = response.jsonPath().getList("email");
+        List<String> emails = response.jsonPath().getList("id");
         assertEquals(count, emails.size());
+    }
+
+    @Then("response item (.*) contains (.*) (.*)")
+    public void checkResponseItem(int position, String field, String value) {
+        String currentValue = response.jsonPath().getString(field + "[" + (position-1) + "]");
+        assertTrue("Current value is " + currentValue, currentValue.contains(value));
     }
 }

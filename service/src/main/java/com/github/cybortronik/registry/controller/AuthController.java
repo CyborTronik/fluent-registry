@@ -1,5 +1,7 @@
-package com.github.cybortronik.registry;
+package com.github.cybortronik.registry.controller;
 
+import com.github.cybortronik.registry.JsonTransformer;
+import com.github.cybortronik.registry.JwtGenerator;
 import com.github.cybortronik.registry.bean.Login;
 import com.github.cybortronik.registry.bean.LoginToken;
 import com.github.cybortronik.registry.bean.Roles;

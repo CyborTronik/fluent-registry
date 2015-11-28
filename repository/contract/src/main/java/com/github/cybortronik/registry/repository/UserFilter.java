@@ -10,7 +10,7 @@ public class UserFilter {
     private String email;
     private String sortBy;
     private int page;
-    private int itemsPerPage = 50;
+    private int limit = 50;
 
     public String getDisplayName() {
         return displayName;
@@ -44,15 +44,15 @@ public class UserFilter {
         this.page = page;
     }
 
-    public int getItemsPerPage() {
-        return itemsPerPage;
+    public int getLimit() {
+        return limit;
     }
 
-    public void setItemsPerPage(int itemsPerPage) {
-        if (itemsPerPage > MAX_ITEMS_PER_PAGE)
-            itemsPerPage = MAX_ITEMS_PER_PAGE;
-        if (itemsPerPage < MIN_ITEMS_PER_PAGE)
-            itemsPerPage = MIN_ITEMS_PER_PAGE;
-        this.itemsPerPage = itemsPerPage;
+    public void setLimit(int limit) {
+        if (limit > MAX_ITEMS_PER_PAGE)
+            limit = MAX_ITEMS_PER_PAGE;
+        if (limit < MIN_ITEMS_PER_PAGE)
+            limit = MIN_ITEMS_PER_PAGE;
+        this.limit = limit;
     }
 }
