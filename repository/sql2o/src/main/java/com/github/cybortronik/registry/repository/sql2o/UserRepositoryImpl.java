@@ -1,9 +1,11 @@
 package com.github.cybortronik.registry.repository.sql2o;
 
 import com.github.cybortronik.registry.bean.User;
-import com.github.cybortronik.registry.repository.UserFilter;
+import com.github.cybortronik.registry.repository.bean.FilteredUsers;
+import com.github.cybortronik.registry.repository.bean.UserFilter;
 import com.github.cybortronik.registry.repository.UserRepository;
 import com.google.gson.JsonElement;
+import org.omg.PortableInterceptor.USER_EXCEPTION;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,21 +114,42 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> filter(UserFilter userFilter) {
+    public FilteredUsers filter(UserFilter userFilter) {
         int limit = userFilter.getLimit();
         if (limit <= 0)
             throw new IllegalArgumentException("Cannot filter for items less or equals to zero");
+        String sql = computeFilterQuery(userFilter);
+
+        long countFilteredUsers = dbExecutor.countBySql(sql);
+        int totalPages = (int) ((countFilteredUsers + limit)/limit);
+
+        sql = computePageView(userFilter, limit, sql);
+        LOGGER.trace("Generated SQL: " + sql);
+
+        List<User> users = dbExecutor.find(sql, new HashMap<>(), User.class);
+        FilteredUsers filteredUsers = new FilteredUsers();
+        filteredUsers.setLimit(limit);
+        filteredUsers.setCurrentPage(userFilter.getPage());
+        filteredUsers.setUsers(users);
+        filteredUsers.setTotalPages(totalPages);
+        return filteredUsers;
+    }
+
+    private String computePageView(UserFilter userFilter, int limit, String sql) {
+        if (isNotBlank(userFilter.getSortBy()))
+            sql += " ORDER BY " + filterInjection(userFilter.getSortBy());
+        int offset = userFilter.getPage() * limit;
+        sql += " LIMIT " + offset + "," + limit;
+        return sql;
+    }
+
+    private String computeFilterQuery(UserFilter userFilter) {
         String sql = "select * from users where 1=1 ";
         if (isNotBlank(userFilter.getDisplayName()))
             sql += " AND displayName like '%" + filterInjection(userFilter.getDisplayName()) + "%' ";
         if (isNotBlank(userFilter.getEmail()))
             sql += " AND email like '%" + filterInjection(userFilter.getEmail()) + "%' ";
-        if (isNotBlank(userFilter.getSortBy()))
-            sql += " ORDER BY " + filterInjection(userFilter.getSortBy());
-        int offset = userFilter.getPage() * limit;
-        sql += " LIMIT " + offset + "," + limit;
-        LOGGER.trace("Generated SQL: " + sql);
-        return dbExecutor.find(sql, new HashMap<>(), User.class);
+        return sql;
     }
 
     @Override

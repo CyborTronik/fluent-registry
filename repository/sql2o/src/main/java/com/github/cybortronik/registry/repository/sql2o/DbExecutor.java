@@ -130,4 +130,13 @@ public class DbExecutor {
             return list;
         }
     }
+
+    public long countBySql(String sql) {
+        try (Connection con = sql2o.open()) {
+            Object o = con.createQuery(format("SELECT count(*) FROM (%s) as tmp", sql))
+                    .executeScalar();
+            con.commit();
+            return ((Number)o).longValue();
+        }
+    }
 }

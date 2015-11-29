@@ -3,14 +3,14 @@ package com.github.cybortronik.registry.controller;
 import com.github.cybortronik.registry.JsonTransformer;
 import com.github.cybortronik.registry.UrlDecoder;
 import com.github.cybortronik.registry.bean.User;
-import com.github.cybortronik.registry.repository.UserFilter;
 import com.github.cybortronik.registry.bean.UserRequest;
+import com.github.cybortronik.registry.repository.bean.FilteredUsers;
+import com.github.cybortronik.registry.repository.bean.UserFilter;
 import com.github.cybortronik.registry.service.UserService;
 import spark.Request;
 import spark.Response;
 
 import javax.inject.Inject;
-import java.util.List;
 
 import static java.util.Objects.isNull;
 import static org.eclipse.jetty.util.StringUtil.isBlank;
@@ -32,7 +32,7 @@ public class UsersController {
         this.urlDecoder = urlDecoder;
     }
 
-    public List<User> getUsers(Request request, Response response) {
+    public FilteredUsers getUsers(Request request, Response response) {
         UserFilter userFilter = extractUserFilter(request);
         return userService.filter(userFilter);
     }
@@ -54,11 +54,11 @@ public class UsersController {
 
         String page = request.queryParams("page");
         if (page != null)
-            userFilter.setPage(Integer.getInteger(page));
+            userFilter.setPage(Integer.parseInt(page));
 
-        String itemsPerPage = request.queryParams("itemsPerPage");
-        if (itemsPerPage != null)
-            userFilter.setLimit(Integer.getInteger(itemsPerPage));
+        String limit = request.queryParams("limit");
+        if (limit != null)
+            userFilter.setLimit(Integer.parseInt(limit));
 
         return userFilter;
     }

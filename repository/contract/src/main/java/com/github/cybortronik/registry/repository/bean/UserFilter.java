@@ -1,11 +1,11 @@
-package com.github.cybortronik.registry.repository;
+package com.github.cybortronik.registry.repository.bean;
 
 /**
  * Created by stanislav on 11/23/15.
  */
 public class UserFilter {
-    public static final int MAX_ITEMS_PER_PAGE = 100;
-    public static final int MIN_ITEMS_PER_PAGE = 10;
+    public static final int MAX_ITEMS_PER_PAGE = 250;
+    public static final int MIN_ITEMS_PER_PAGE = 5;
     private String displayName;
     private String email;
     private String sortBy;

@@ -1,7 +1,7 @@
 package features;
 
 import com.github.cybortronik.registry.bean.User;
-import com.github.cybortronik.registry.repository.UserFilter;
+import com.github.cybortronik.registry.repository.bean.UserFilter;
 import com.github.cybortronik.registry.repository.UserRepository;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -71,7 +71,7 @@ public class UserStepdefs {
     public void listUsersOrderedByDisplayName(String orderDirection) {
         UserFilter userFilter = new UserFilter();
         userFilter.setSortBy("displayName " + orderDirection);
-        userList = userRepository.filter(userFilter);
+        userList = userRepository.filter(userFilter).getUsers();
     }
 
     @Then("user number (.*) has display name (.*)")

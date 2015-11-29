@@ -72,3 +72,21 @@ Feature: Listing users
     And response item 1 contains email stanislav@trifan.com
     And response item 2 contains email test2@trifan.com
     And response item 3 contains email test3@trifan.com
+
+
+  Scenario: Pagination feature
+    Given having account test1@trifan.com with password 's3cr3t'
+    And having account test2@trifan.com with password 's3cr3t'
+    And having account test3@trifan.com with password 's3cr3t'
+    And having account test4@trifan.com with password 's3cr3t'
+    And having account test5@trifan.com with password 's3cr3t'
+    And having account test6@trifan.com with password 's3cr3t'
+    When get /users?limit=5
+    Then response code is 200
+    And response list counts 5
+    And response contains: "limit":5
+    And response contains: "currentPage":0
+    And response contains: "totalPages":2
+    When get /users?limit=5&page=1
+    Then response code is 200
+    And response list counts 2

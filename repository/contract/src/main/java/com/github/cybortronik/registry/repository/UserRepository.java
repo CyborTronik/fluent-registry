@@ -1,6 +1,8 @@
 package com.github.cybortronik.registry.repository;
 
 import com.github.cybortronik.registry.bean.User;
+import com.github.cybortronik.registry.repository.bean.FilteredUsers;
+import com.github.cybortronik.registry.repository.bean.UserFilter;
 import com.google.gson.JsonElement;
 
 import java.util.List;
@@ -25,7 +27,7 @@ public interface UserRepository extends Repository<User, String> {
 
     void setPasswordHash(String uuid, String passwordHash);
 
-    List<User> filter(UserFilter userFilter);
+    FilteredUsers filter(UserFilter userFilter);
 
     UUID createUser(String displayName, String email, String passwordHash);
 
