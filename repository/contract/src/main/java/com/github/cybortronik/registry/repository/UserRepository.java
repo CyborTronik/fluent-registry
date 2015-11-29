@@ -1,6 +1,7 @@
 package com.github.cybortronik.registry.repository;
 
 import com.github.cybortronik.registry.bean.User;
+import com.google.gson.JsonElement;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +11,7 @@ import java.util.UUID;
  */
 public interface UserRepository extends Repository<User, String> {
 
-    UUID createUser(String displayName, String email, String passwordHash);
+    UUID createUser(String displayName, String email, String passwordHash, String details);
 
     User findByEmail(String email);
 
@@ -25,4 +26,8 @@ public interface UserRepository extends Repository<User, String> {
     void setPasswordHash(String uuid, String passwordHash);
 
     List<User> filter(UserFilter userFilter);
+
+    UUID createUser(String displayName, String email, String passwordHash);
+
+    void updateDetails(String uuid, JsonElement details);
 }

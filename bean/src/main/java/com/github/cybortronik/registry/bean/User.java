@@ -1,5 +1,7 @@
 package com.github.cybortronik.registry.bean;
 
+import com.google.gson.JsonElement;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +14,7 @@ public class User extends Bean {
     private String email;
     private transient String passwordHash;
     private Set<String> roles;
+    private JsonElement details;
 
     public String getDisplayName() {
         return displayName;
@@ -71,5 +74,13 @@ public class User extends Bean {
             if (hasRole(role))
                 return true;
         return false;
+    }
+
+    public JsonElement getDetails() {
+        return details;
+    }
+
+    public void setDetails(JsonElement details) {
+        this.details = details;
     }
 }

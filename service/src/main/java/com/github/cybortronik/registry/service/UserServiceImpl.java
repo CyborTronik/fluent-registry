@@ -6,6 +6,7 @@ import com.github.cybortronik.registry.bean.UserRequest;
 import com.github.cybortronik.registry.exception.ValidationException;
 import com.github.cybortronik.registry.repository.UserFilter;
 import com.github.cybortronik.registry.repository.UserRepository;
+import com.google.gson.JsonElement;
 import org.jasypt.util.password.PasswordEncryptor;
 
 import javax.inject.Inject;
@@ -47,15 +48,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UUID createUser(String displayName, String email, String password) {
+    public UUID createUser(String displayName, String email, String password, String details) {
         String encryptedPassword = passwordEncryptor.encryptPassword(password);
-        return userRepository.createUser(displayName, email, encryptedPassword);
+        return userRepository.createUser(displayName, email, encryptedPassword, details);
     }
 
     @Override
     public User createUser(UserRequest userRequest) {
         passwordsMustMatch(userRequest);
-        UUID uuid = createUser(userRequest.getDisplayName(), userRequest.getEmail(), userRequest.getPassword());
+        JsonElement jsonElement = userRequest.getDetails();
+        String details = jsonElement == null? null : jsonElement.toString();
+        UUID uuid = createUser(userRequest.getDisplayName(), userRequest.getEmail(), userRequest.getPassword(), details);
         String userId = uuid.toString();
         if (userRequest.getRoles() != null)
             userRequest.getRoles().forEach(role -> userRepository.addUserRole(userId, role));
@@ -86,6 +89,9 @@ public class UserServiceImpl implements UserService {
             String encryptedPassword = passwordEncryptor.encryptPassword(request.getPassword());
             userRepository.setPasswordHash(uuid, encryptedPassword);
         }
+        if (request.getDetails() != null) {
+            userRepository.updateDetails(uuid, request.getDetails());
+        }
         return findById(uuid);
     }
 
@@ -97,6 +103,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> filter(UserFilter userFilter) {
         return userRepository.filter(userFilter);
+    }
+
+    @Override
+    public void createUser(String displayName, String email, String password) {
+        createUser(displayName, email, password, null);
     }
 
 }

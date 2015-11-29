@@ -4,7 +4,6 @@ import com.github.cybortronik.registry.bean.Login;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.bean.UserRequest;
 import com.github.cybortronik.registry.repository.UserFilter;
-import spark.Request;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +18,7 @@ public interface UserService {
 
     User find(Login login);
 
-    UUID createUser(String displayName, String email, String password);
+    UUID createUser(String displayName, String email, String password, String details);
 
     User createUser(UserRequest userRequest);
 
@@ -30,4 +29,6 @@ public interface UserService {
     void delete(String uuid);
 
     List<User> filter(UserFilter userFilter);
+
+    void createUser(String email, String email1, String password);
 }

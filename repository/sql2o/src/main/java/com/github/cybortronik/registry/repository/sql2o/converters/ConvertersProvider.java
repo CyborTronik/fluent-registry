@@ -1,5 +1,6 @@
 package com.github.cybortronik.registry.repository.sql2o.converters;
 
+import com.google.gson.JsonElement;
 import org.sql2o.converters.Converter;
 
 import java.time.OffsetDateTime;
@@ -12,5 +13,6 @@ public class ConvertersProvider implements org.sql2o.converters.ConvertersProvid
     @Override
     public void fill(Map<Class<?>, Converter<?>> mapToFill) {
         mapToFill.put(OffsetDateTime.class, new OffsetDateTimeConverter());
+        mapToFill.put(JsonElement.class, new JsonElementConverter());
     }
 }

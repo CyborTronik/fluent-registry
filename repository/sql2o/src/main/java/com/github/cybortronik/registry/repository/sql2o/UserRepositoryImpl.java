@@ -3,6 +3,7 @@ package com.github.cybortronik.registry.repository.sql2o;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.repository.UserFilter;
 import com.github.cybortronik.registry.repository.UserRepository;
+import com.google.gson.JsonElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,14 +48,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public UUID createUser(String displayName, String email, String passwordHash) {
+    public UUID createUser(String displayName, String email, String passwordHash, String details) {
         UUID uuid = UUID.randomUUID();
         Map<String, Object> params = new HashMap<>();
         params.put("id", uuid.toString());
         params.put("displayName", displayName);
         params.put("email", email);
         params.put("passwordHash", passwordHash);
-        dbExecutor.execute("INSERT INTO users (id, displayName, email, passwordHash, createdAt, updatedAt) VALUES(:id, :displayName, :email, :passwordHash, NULL, NULL)", params);
+        params.put("details", details);
+        dbExecutor.execute("INSERT INTO users (id, displayName, email, passwordHash, details, createdAt, updatedAt) VALUES(:id, :displayName, :email, :passwordHash, :details, NULL, NULL)", params);
         return uuid;
     }
 
@@ -125,6 +127,19 @@ public class UserRepositoryImpl implements UserRepository {
         sql += " LIMIT " + offset + "," + limit;
         LOGGER.trace("Generated SQL: " + sql);
         return dbExecutor.find(sql, new HashMap<>(), User.class);
+    }
+
+    @Override
+    public UUID createUser(String displayName, String email, String passwordHash) {
+        return createUser(displayName, email, passwordHash, null);
+    }
+
+    @Override
+    public void updateDetails(String uuid, JsonElement details) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", uuid);
+        params.put("details", details.toString());
+        dbExecutor.execute("update users set details=:details where id = :id", params);
     }
 
     private String filterInjection(String text) {

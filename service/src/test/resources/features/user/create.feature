@@ -31,3 +31,13 @@ Feature: Create users
     Then response code is 200
     And response contains: "displayName":"John Carter"
     And response contains: MANAGE_USERS
+
+  Scenario: Create user with custom details (in JSON format)
+    Given having account stanislav@trifan.com with password 's3cr3t'
+    And stanislav@trifan.com has MANAGE_USERS role
+    And login as stanislav@trifan.com with password 's3cr3t'
+    When put /users with { email:"john@carter.com", displayName:"John Carter", password: "password", passwordConfirmation: "password", details: { gender: "male"} }
+    Then response code is 200
+    And response contains: "displayName":"John Carter"
+    And response contains: "details":{"gender":"male"}
+

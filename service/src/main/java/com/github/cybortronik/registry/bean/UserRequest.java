@@ -1,5 +1,7 @@
 package com.github.cybortronik.registry.bean;
 
+import com.google.gson.JsonElement;
+
 import java.util.List;
 
 /**
@@ -11,6 +13,7 @@ public class UserRequest {
     private String email;
     private String password;
     private String passwordConfirmation;
+    private JsonElement details;
     private List<String> roles;
 
     public String getDisplayName() {
@@ -51,5 +54,13 @@ public class UserRequest {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public JsonElement getDetails() {
+        return details;
+    }
+
+    public void setDetails(JsonElement details) {
+        this.details = details;
     }
 }

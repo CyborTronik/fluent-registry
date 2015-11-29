@@ -45,3 +45,8 @@ Feature: Update users
     When login as stanislav@trifan.com with password 'test'
     Then response code is 200
     And response contains: jwt
+
+  Scenario: Change user details in JSON format
+    When post /users/${userId} with { details: { gender: "male"} }
+    Then response code is 200
+    And response contains: "details":{"gender":"male"}
