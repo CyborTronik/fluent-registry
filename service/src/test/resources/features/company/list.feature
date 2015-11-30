@@ -1,10 +1,11 @@
-Feature: User must be assigned to a company
+Feature: List companies
+
 
   Background:
     Given no any company
 
   Scenario: List companies
-    When list companies
+    When get /companies
     Then response code is 200
     And result list is empty
 

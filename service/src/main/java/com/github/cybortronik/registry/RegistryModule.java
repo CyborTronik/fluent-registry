@@ -1,11 +1,10 @@
 package com.github.cybortronik.registry;
 
+import com.github.cybortronik.registry.bean.FilterRequestFactory;
+import com.github.cybortronik.registry.controller.CompaniesController;
 import com.github.cybortronik.registry.controller.RoleController;
 import com.github.cybortronik.registry.controller.UsersController;
-import com.github.cybortronik.registry.service.RoleService;
-import com.github.cybortronik.registry.service.RoleServiceImpl;
-import com.github.cybortronik.registry.service.UserService;
-import com.github.cybortronik.registry.service.UserServiceImpl;
+import com.github.cybortronik.registry.service.*;
 import com.google.inject.AbstractModule;
 import org.jasypt.util.password.PasswordEncryptor;
 import org.jasypt.util.password.rfc2307.RFC2307SMD5PasswordEncryptor;
@@ -27,6 +26,10 @@ public class RegistryModule extends AbstractModule {
         bind(RoleService.class).to(RoleServiceImpl.class);
         bind(RoleController.class);
 
+        bind(CompanyService.class).to(CompanyServiceImpl.class);
+        bind(CompaniesController.class);
+
         bind(UrlDecoder.class);
+        bind(FilterRequestFactory.class);
     }
 }

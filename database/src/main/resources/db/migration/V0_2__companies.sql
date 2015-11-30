@@ -3,6 +3,7 @@ CREATE TABLE companies (
   name        VARCHAR(100),
   logoPath    VARCHAR(40),
   description VARCHAR(100),
+  details     TEXT,
   enabled     BIT                DEFAULT 1,
   createdAt   TIMESTAMP NOT NULL DEFAULT 0,
   updatedAt   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

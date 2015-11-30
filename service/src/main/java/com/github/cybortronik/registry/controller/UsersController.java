@@ -1,11 +1,11 @@
 package com.github.cybortronik.registry.controller;
 
 import com.github.cybortronik.registry.JsonTransformer;
-import com.github.cybortronik.registry.UrlDecoder;
+import com.github.cybortronik.registry.bean.FilterRequestFactory;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.bean.UserRequest;
-import com.github.cybortronik.registry.repository.bean.FilterResult;
 import com.github.cybortronik.registry.repository.bean.FilterRequest;
+import com.github.cybortronik.registry.repository.bean.FilterResult;
 import com.github.cybortronik.registry.service.UserService;
 import spark.Request;
 import spark.Response;
@@ -23,40 +23,18 @@ public class UsersController {
 
     private UserService userService;
     private JsonTransformer jsonTransformer;
-    private UrlDecoder urlDecoder;
+    private FilterRequestFactory filterRequestFactory;
 
     @Inject
-    public UsersController(UserService userService, JsonTransformer jsonTransformer, UrlDecoder urlDecoder) {
+    public UsersController(UserService userService, JsonTransformer jsonTransformer, FilterRequestFactory filterRequestFactory) {
         this.userService = userService;
         this.jsonTransformer = jsonTransformer;
-        this.urlDecoder = urlDecoder;
+        this.filterRequestFactory = filterRequestFactory;
     }
 
     public FilterResult<User> getUsers(Request request, Response response) {
-        FilterRequest filterRequest = extractUserFilter(request);
+        FilterRequest filterRequest = filterRequestFactory.create(request);
         return userService.filter(filterRequest);
-    }
-
-    private FilterRequest extractUserFilter(Request request) {
-        FilterRequest filterRequest = new FilterRequest();
-
-        String displayName = request.queryParams("q");
-        displayName = urlDecoder.decode(displayName);
-        filterRequest.setQuery(displayName);
-
-        String sortBy = request.queryParams("sortBy");
-        sortBy = urlDecoder.decode(sortBy);
-        filterRequest.setSortBy(sortBy);
-
-        String page = request.queryParams("page");
-        if (page != null)
-            filterRequest.setPage(Integer.parseInt(page));
-
-        String limit = request.queryParams("limit");
-        if (limit != null)
-            filterRequest.setLimit(Integer.parseInt(limit));
-
-        return filterRequest;
     }
 
     public User showUser(Request request, Response response) {

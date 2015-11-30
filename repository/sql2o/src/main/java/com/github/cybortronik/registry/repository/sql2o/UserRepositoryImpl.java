@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.util.*;
 
+import static com.github.cybortronik.registry.repository.sql2o.InjectionUtils.filterInjectionValue;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
@@ -136,7 +137,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private String computePageView(FilterRequest filterRequest, int limit, String sql) {
         if (isNotBlank(filterRequest.getSortBy()))
-            sql += " ORDER BY " + filterInjection(filterRequest.getSortBy());
+            sql += " ORDER BY " + filterInjectionValue(filterRequest.getSortBy());
         int offset = filterRequest.getPage() * limit;
         sql += " LIMIT " + offset + "," + limit;
         return sql;
@@ -146,7 +147,7 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "select * from users ";
         String query = filterRequest.getQuery();
         if (isNotBlank(query)) {
-            String safeQuery = filterInjection(query);
+            String safeQuery = filterInjectionValue(query);
             sql += " WHERE displayName like '%" + safeQuery + "%' OR email like '%" + safeQuery + "%' ";
         }
         return sql;
@@ -163,12 +164,6 @@ public class UserRepositoryImpl implements UserRepository {
         params.put("id", uuid);
         params.put("details", details.toString());
         dbExecutor.execute("update users set details=:details where id = :id", params);
-    }
-
-    private String filterInjection(String text) {
-        //Do not allow to split commands
-        //Very basic injector checker
-        return text.replaceAll(";", "").replaceAll("DELIMITER", "").replaceAll("//", "");
     }
 
     private void deleteRole(String uuid, String role) {
