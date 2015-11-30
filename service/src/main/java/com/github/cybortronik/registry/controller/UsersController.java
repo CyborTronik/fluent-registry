@@ -5,7 +5,7 @@ import com.github.cybortronik.registry.UrlDecoder;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.bean.UserRequest;
 import com.github.cybortronik.registry.repository.bean.FilterResult;
-import com.github.cybortronik.registry.repository.bean.UserFilter;
+import com.github.cybortronik.registry.repository.bean.FilterRequest;
 import com.github.cybortronik.registry.service.UserService;
 import spark.Request;
 import spark.Response;
@@ -33,34 +33,30 @@ public class UsersController {
     }
 
     public FilterResult<User> getUsers(Request request, Response response) {
-        UserFilter userFilter = extractUserFilter(request);
-        return userService.filter(userFilter);
+        FilterRequest filterRequest = extractUserFilter(request);
+        return userService.filter(filterRequest);
     }
 
-    private UserFilter extractUserFilter(Request request) {
-        UserFilter userFilter = new UserFilter();
+    private FilterRequest extractUserFilter(Request request) {
+        FilterRequest filterRequest = new FilterRequest();
 
-        String displayName = request.queryParams("displayName");
+        String displayName = request.queryParams("q");
         displayName = urlDecoder.decode(displayName);
-        userFilter.setDisplayName(displayName);
-
-        String email = request.queryParams("email");
-        email = urlDecoder.decode(email);
-        userFilter.setEmail(email);
+        filterRequest.setQuery(displayName);
 
         String sortBy = request.queryParams("sortBy");
         sortBy = urlDecoder.decode(sortBy);
-        userFilter.setSortBy(sortBy);
+        filterRequest.setSortBy(sortBy);
 
         String page = request.queryParams("page");
         if (page != null)
-            userFilter.setPage(Integer.parseInt(page));
+            filterRequest.setPage(Integer.parseInt(page));
 
         String limit = request.queryParams("limit");
         if (limit != null)
-            userFilter.setLimit(Integer.parseInt(limit));
+            filterRequest.setLimit(Integer.parseInt(limit));
 
-        return userFilter;
+        return filterRequest;
     }
 
     public User showUser(Request request, Response response) {

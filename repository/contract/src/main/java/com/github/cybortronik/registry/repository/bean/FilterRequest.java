@@ -3,29 +3,20 @@ package com.github.cybortronik.registry.repository.bean;
 /**
  * Created by stanislav on 11/23/15.
  */
-public class UserFilter {
+public class FilterRequest {
     public static final int MAX_ITEMS_PER_PAGE = 250;
     public static final int MIN_ITEMS_PER_PAGE = 5;
-    private String displayName;
-    private String email;
+    private String query;
     private String sortBy;
     private int page;
     private int limit = 50;
 
-    public String getDisplayName() {
-        return displayName;
+    public String getQuery() {
+        return query;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setQuery(String query) {
+        this.query = query;
     }
 
     public String getSortBy() {
