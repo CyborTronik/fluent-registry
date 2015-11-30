@@ -27,9 +27,10 @@ public class Application {
         JsonTransformer jsonTransformer = injector.getInstance(JsonTransformer.class);
 
         AuthController authController = injector.getInstance(AuthController.class);
+        before("/users", ((request, response) -> authController.authenticate(request, response, Roles.MANAGE_USERS)));
+        before("/companies", ((request, response) -> authController.authenticate(request, response, Roles.MANAGE_COMPANIES)));
         post("/login", ACCEPT_TYPE, (authController::login), jsonTransformer::toJson);
 
-        before("/users", ((request, response) -> authController.authenticate(request, response, Roles.MANAGE_USERS)));
 
         CompaniesController companiesController = injector.getInstance(CompaniesController.class);
         get("/companies", ACCEPT_TYPE,(companiesController::getCompanies), jsonTransformer::toJson);

@@ -9,4 +9,8 @@ import com.github.cybortronik.registry.repository.bean.FilterResult;
  */
 public interface CompanyService {
     FilterResult<Company> filter(FilterRequest filterRequest);
+
+    void deleteAll();
+
+    void createCompany(String companyName);
 }

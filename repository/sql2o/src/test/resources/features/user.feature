@@ -15,8 +15,8 @@ Feature: CRUD for users
 
   Scenario: Order users by display name
     Given create user: Test1, strifan@email.com, qwertyhash
-    And create user: Test3, strifan@email.com, qwertyhash
-    And create user: Test2, strifan@email.com, qwertyhash
+    And create user: Test3, strifan@email2.com, qwertyhash
+    And create user: Test2, strifan@email3.com, qwertyhash
     When list users ordered by display name asc
     Then user number 1 has display name Test1
     Then user number 2 has display name Test2
@@ -24,8 +24,8 @@ Feature: CRUD for users
 
   Scenario: Order users by display name desc
     Given create user: Test1, strifan@email.com, qwertyhash
-    And create user: Test3, strifan@email.com, qwertyhash
-    And create user: Test2, strifan@email.com, qwertyhash
+    And create user: Test3, strifan@email2.com, qwertyhash
+    And create user: Test2, strifan@email3.com, qwertyhash
     When list users ordered by display name desc
     Then user number 1 has display name Test3
     Then user number 2 has display name Test2

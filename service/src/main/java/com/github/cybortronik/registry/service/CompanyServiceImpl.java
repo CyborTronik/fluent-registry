@@ -23,4 +23,14 @@ public class CompanyServiceImpl implements CompanyService {
     public FilterResult<Company> filter(FilterRequest filterRequest) {
         return companyRepository.filter(filterRequest);
     }
+
+    @Override
+    public void deleteAll() {
+        companyRepository.deleteAll();
+    }
+
+    @Override
+    public void createCompany(String companyName) {
+        companyRepository.createCompany(companyName);
+    }
 }

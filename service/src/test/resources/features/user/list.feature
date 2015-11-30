@@ -24,7 +24,6 @@ Feature: Listing users
     And response contains: "email":"test1@trifan.com"
     And response contains: "email":"test2@trifan.com"
 
-
   Scenario: Filter by email
     Given having account test1@trifan.com with password 's3cr3t'
     And having account test2@trifan.com with password 's3cr3t'
@@ -41,7 +40,6 @@ Feature: Listing users
     And response list counts 2
     And response contains: "email":"test1@trifan.com"
     And response contains: "email":"test2@trifan.com"
-
 
   Scenario: Order by email
     Given having account test3@trifan.com with password 's3cr3t'
@@ -72,7 +70,6 @@ Feature: Listing users
     And response item 1 contains email stanislav@trifan.com
     And response item 2 contains email test2@trifan.com
     And response item 3 contains email test3@trifan.com
-
 
   Scenario: Pagination feature
     Given having account test1@trifan.com with password 's3cr3t'

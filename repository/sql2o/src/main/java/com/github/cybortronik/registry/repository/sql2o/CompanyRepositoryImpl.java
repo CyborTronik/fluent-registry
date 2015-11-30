@@ -9,6 +9,7 @@ import com.github.cybortronik.registry.repository.bean.FilterResult;
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static com.github.cybortronik.registry.repository.sql2o.InjectionUtils.filterInjectionValue;
@@ -46,6 +47,15 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     @Override
     public void deleteAll() {
         dbExecutor.deleteFrom(TABLE_NAME);
+    }
+
+    @Override
+    public void createCompany(String companyName) {
+        UUID uuid = UUID.randomUUID();
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", uuid.toString());
+        params.put("name", companyName);
+        dbExecutor.execute("insert into companies (id, name, createdAt, updatedAt) VALUES (:id, :name, NULL, NULL)", params);
     }
 
     @Override

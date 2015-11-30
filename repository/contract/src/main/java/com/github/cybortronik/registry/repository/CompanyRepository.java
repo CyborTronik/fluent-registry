@@ -11,4 +11,6 @@ import java.util.UUID;
  */
 public interface CompanyRepository extends Repository<Company, UUID> {
     FilterResult<Company> filter(FilterRequest filterRequest);
+
+    void createCompany(String companyName);
 }
