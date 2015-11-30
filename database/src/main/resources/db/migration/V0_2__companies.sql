@@ -1,8 +1,8 @@
 CREATE TABLE companies (
   id          VARCHAR(40),
   name        VARCHAR(100),
-  logoPath    VARCHAR(40),
-  description VARCHAR(100),
+  logoPath    VARCHAR(2000),
+  description TEXT,
   details     TEXT,
   enabled     BIT                DEFAULT 1,
   createdAt   TIMESTAMP NOT NULL DEFAULT 0,
