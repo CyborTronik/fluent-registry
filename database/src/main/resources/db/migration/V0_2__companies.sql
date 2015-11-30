@@ -1,6 +1,6 @@
 CREATE TABLE companies (
   id          VARCHAR(40),
-  name        VARCHAR(100),
+  name        VARCHAR(255),
   logoPath    VARCHAR(2000),
   description TEXT,
   details     TEXT,
