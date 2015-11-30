@@ -4,7 +4,7 @@ import com.github.cybortronik.registry.JsonTransformer;
 import com.github.cybortronik.registry.UrlDecoder;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.bean.UserRequest;
-import com.github.cybortronik.registry.repository.bean.FilteredUsers;
+import com.github.cybortronik.registry.repository.bean.FilterResult;
 import com.github.cybortronik.registry.repository.bean.UserFilter;
 import com.github.cybortronik.registry.service.UserService;
 import spark.Request;
@@ -32,7 +32,7 @@ public class UsersController {
         this.urlDecoder = urlDecoder;
     }
 
-    public FilteredUsers getUsers(Request request, Response response) {
+    public FilterResult<User> getUsers(Request request, Response response) {
         UserFilter userFilter = extractUserFilter(request);
         return userService.filter(userFilter);
     }

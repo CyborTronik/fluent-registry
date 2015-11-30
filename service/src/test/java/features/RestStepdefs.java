@@ -152,13 +152,13 @@ public class RestStepdefs {
 
     @Then("response list counts (.*)")
     public void checkListSize(int count) {
-        List<String> emails = response.jsonPath().getList("users.id");
+        List<String> emails = response.jsonPath().getList("entities.id");
         assertEquals(count, emails.size());
     }
 
     @Then("response item (.*) contains (.*) (.*)")
     public void checkResponseItem(int position, String field, String value) {
-        String currentValue = response.jsonPath().getString("users." + field + "[" + (position-1) + "]");
+        String currentValue = response.jsonPath().getString("entities." + field + "[" + (position-1) + "]");
         assertTrue("Current value is " + currentValue, currentValue.contains(value));
     }
 }

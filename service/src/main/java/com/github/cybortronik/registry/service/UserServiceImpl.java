@@ -4,14 +4,13 @@ import com.github.cybortronik.registry.bean.Login;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.bean.UserRequest;
 import com.github.cybortronik.registry.exception.ValidationException;
-import com.github.cybortronik.registry.repository.bean.FilteredUsers;
+import com.github.cybortronik.registry.repository.bean.FilterResult;
 import com.github.cybortronik.registry.repository.bean.UserFilter;
 import com.github.cybortronik.registry.repository.UserRepository;
 import com.google.gson.JsonElement;
 import org.jasypt.util.password.PasswordEncryptor;
 
 import javax.inject.Inject;
-import java.util.List;
 import java.util.UUID;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -102,7 +101,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public FilteredUsers filter(UserFilter userFilter) {
+    public FilterResult<User> filter(UserFilter userFilter) {
         return userRepository.filter(userFilter);
     }
 

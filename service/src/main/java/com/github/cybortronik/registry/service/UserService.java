@@ -3,10 +3,9 @@ package com.github.cybortronik.registry.service;
 import com.github.cybortronik.registry.bean.Login;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.bean.UserRequest;
-import com.github.cybortronik.registry.repository.bean.FilteredUsers;
+import com.github.cybortronik.registry.repository.bean.FilterResult;
 import com.github.cybortronik.registry.repository.bean.UserFilter;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -29,7 +28,7 @@ public interface UserService {
 
     void delete(String uuid);
 
-    FilteredUsers filter(UserFilter userFilter);
+    FilterResult<User> filter(UserFilter userFilter);
 
     void createUser(String email, String email1, String password);
 }

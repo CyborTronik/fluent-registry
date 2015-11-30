@@ -1,24 +1,22 @@
 package com.github.cybortronik.registry.repository.bean;
 
-import com.github.cybortronik.registry.bean.User;
-
 import java.util.List;
 
 /**
  * Created by stanislav on 11/29/15.
  */
-public class FilteredUsers {
-    private List<User> users;
+public class FilterResult<T> {
+    private List<T> entities;
     private int limit;
     private int currentPage;
     private int totalPages;
 
-    public List<User> getUsers() {
-        return users;
+    public List<T> getEntities() {
+        return entities;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setEntities(List<T> entities) {
+        this.entities = entities;
     }
 
     public int getLimit() {

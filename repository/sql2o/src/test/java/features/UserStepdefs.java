@@ -71,7 +71,7 @@ public class UserStepdefs {
     public void listUsersOrderedByDisplayName(String orderDirection) {
         UserFilter userFilter = new UserFilter();
         userFilter.setSortBy("displayName " + orderDirection);
-        userList = userRepository.filter(userFilter).getUsers();
+        userList = userRepository.filter(userFilter).getEntities();
     }
 
     @Then("user number (.*) has display name (.*)")

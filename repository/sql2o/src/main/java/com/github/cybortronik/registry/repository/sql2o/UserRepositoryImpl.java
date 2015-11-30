@@ -1,11 +1,10 @@
 package com.github.cybortronik.registry.repository.sql2o;
 
 import com.github.cybortronik.registry.bean.User;
-import com.github.cybortronik.registry.repository.bean.FilteredUsers;
+import com.github.cybortronik.registry.repository.bean.FilterResult;
 import com.github.cybortronik.registry.repository.bean.UserFilter;
 import com.github.cybortronik.registry.repository.UserRepository;
 import com.google.gson.JsonElement;
-import org.omg.PortableInterceptor.USER_EXCEPTION;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -114,7 +113,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public FilteredUsers filter(UserFilter userFilter) {
+    public FilterResult<User> filter(UserFilter userFilter) {
         int limit = userFilter.getLimit();
         if (limit <= 0)
             throw new IllegalArgumentException("Cannot filter for items less or equals to zero");
@@ -127,12 +126,12 @@ public class UserRepositoryImpl implements UserRepository {
         LOGGER.trace("Generated SQL: " + sql);
 
         List<User> users = dbExecutor.find(sql, new HashMap<>(), User.class);
-        FilteredUsers filteredUsers = new FilteredUsers();
-        filteredUsers.setLimit(limit);
-        filteredUsers.setCurrentPage(userFilter.getPage());
-        filteredUsers.setUsers(users);
-        filteredUsers.setTotalPages(totalPages);
-        return filteredUsers;
+        FilterResult<User> filterResult = new FilterResult<>();
+        filterResult.setLimit(limit);
+        filterResult.setCurrentPage(userFilter.getPage());
+        filterResult.setEntities(users);
+        filterResult.setTotalPages(totalPages);
+        return filterResult;
     }
 
     private String computePageView(UserFilter userFilter, int limit, String sql) {
