@@ -24,7 +24,9 @@
         <% if (typeof(imgUrl) !== "undefined") { %>
             <a tabindex="0" data-html="true" placement="right" data-toggle="popover" data-trigger="focus" title="<%=keyword%> <%=name%>" data-content="<img src='<%= imgUrl %>' ></img>"><img src="<%= imgUrl %>" alt="<%=keyword%> <%=name%>" class="img-thumbnail" style="width: 40pt; height: 30pt;"></a>
         <% } %>
-        <span class="text-muted pull-right"><%=result.status%></span>
+        <% if (result.status !== "passed") { %>
+            <span class="text-muted pull-right"><%=result.status%></span>
+        <% } %>
     </p>
     <% if (typeof(result.error_message) !== "undefined") { %>
     <div class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -39,11 +41,19 @@
 </script>
 
 <script type="text/template" id="tpl_scenario">
-    <div class="<%=type%>">
-        <h3> <strong><%=keyword%>: </strong> <%=name%> </h3>
+    <% if (keyword !== "Background" || (keyword == "Background" && status != "passed")) { %>
+    <div class="<%=type%> panel panel-<%=panel_type%>">
+        <div class="panel-heading">
+            <% if (keyword == "Background") { %>
+            <strong><%=keyword%>: </strong>
+            <% } %>
+            <%=name%>
+        </div>
+        <div class="step_list panel-body" id="scenario<%=line%>">
 
-        <div class="step_list" id="scenario<%=line%>"></div>
+        </div>
     </div>
+    <% } %>
 </script>
 
 <script type="text/template" id="tpl_feature">
@@ -61,36 +71,43 @@
 </script>
 
 <script type="text/template" id="tpl_feature_summary">
-    <td></td>
-    <td><a href="#feature/<%=name%>"><%=name%></a></td>
-    <td class="text-success"><%=successCount%></td>
-    <td class="text-danger"><%=failedCount%></td>
-    <td class="text-muted"><%=otherCount%></td>
-    <td><%=totalCount%></td>
+    <li class="list-group-item">
+        <a href="#feature/<%=name%>"><%=name%></a>
+        <span>
+            <% if (failedCount > 0) { %>
+                <span class="badge"><%=failedCount%> fails</span>
+            <% } %>
+            <% if (otherCount > 0) { %>
+                <span class="badge"><%=otherCount%> skipped</span>
+            <% } %>
+        </span>
+    </li>
 </script>
 
 <script type="text/template" id="tpl_features">
     <div class="jumbotron">
-        <h1>BDD report</h1>
-
-        <p class="lead">Feature run results (<%=features_count%>).</p>
+        <p class="lead">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tortor nisi, faucibus vel lacinia congue, varius tincidunt dui.
+            Etiam mauris orci, tempus quis sapien vel, pellentesque luctus massa. Donec dictum dignissim iaculis. Pellentesque dapibus ullamcorper velit,
+            ac condimentum justo gravida quis. Sed sed sapien vitae mi tristique ultrices. Donec volutpat gravida quam, at commodo neque pellentesque non.
+            Suspendisse sit amet metus enim. Vivamus congue lectus vitae felis blandit egestas. Nullam sed commodo eros, quis accumsan velit.
+            Donec pellentesque massa nec enim tincidunt, at tincidunt ex fermentum. Ut non magna lobortis leo fringilla cursus.
+        </p>
     </div>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Feature name</th>
-            <th>Passed</th>
-            <th>Failed</th>
-            <th>Other</th>
-            <th>Total scenarios</th>
-        </tr>
-        </thead>
-        <tbody class="feature_list">
 
-        </tbody>
-    </table>
+    <div class="panel-body">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 align="center">
+                    Contents
+                </h2>
+            </div>
+            <div class="panel-body">
+                <ul class="feature_list list-group"></ul>
+            </div>
+        </div>
+    </div>
 </script>
 
 <div class="container">
@@ -100,7 +117,7 @@
             </ul>
         </nav>
         <a href="#home">
-            <h3 class="text-muted">BDD report</h3>
+            <h3 class="text-muted">Fluent Registry</h3>
         </a>
     </div>
     <div id="main">
@@ -249,7 +266,7 @@
                 console.log("Try rendering feature:");
                 console.log(feature);
                 var feature_view = new $.FeatureSummaryView({model: feature});
-                this.$('tbody.feature_list').append($(feature_view.render()));
+                this.$('.feature_list').append($(feature_view.render()));
             }
         });
 
@@ -294,13 +311,13 @@
         });
 
         function computeFeatureStatistics(feature) {
+            feature.elements.forEach(computeScenarioStatistics);
             var scenarios = Enumerable.From(feature.elements).Where(function (x) {
                 return x.type == 'scenario';
             });
             feature.totalCount = scenarios.Count();
             feature.successCount = scenarios.Where(function (x) {
                 return !hasStepWithStatus(x, "failed")
-                        && !hasStepWithStatus(x, "failed")
                         && !hasStepWithStatus(x, "undefined")
                         && !hasStepWithStatus(x, "skipped");
             }).Count();
@@ -309,6 +326,26 @@
             }).Count();
 
             feature.otherCount = feature.totalCount - feature.successCount - feature.failedCount;
+        }
+
+        function computeScenarioStatistics(scenario) {
+            if (hasStepWithStatus(scenario, "failed")) {
+                scenario.status = "failed";
+                scenario.panel_type = "danger";
+                return;
+            }
+            if (hasStepWithStatus(scenario, "skipped")) {
+                scenario.status = "skipped";
+                scenario.panel_type = "warning";
+                return;
+            }
+            if (hasStepWithStatus(scenario, "undefined")) {
+                scenario.status = "undefined";
+                scenario.panel_type = "warning";
+                return;
+            }
+            scenario.status = "passed";
+            scenario.panel_type = "info";
         }
 
         function hasStepWithStatus(scenario, stauts) {
@@ -349,9 +386,9 @@
         }
 
         function updateStyles() {
-            $('.passed').addClass('alert-success');
-            $('.skipped').addClass('alert-warning');
-            $('.failed').addClass('alert-danger');
+            //$('.passed').addClass('alert-success');
+            $('.skipped').addClass('bg-warning');
+            $('.failed').addClass('bg-danger');
             $('.undefined').addClass('text-muted');
         }
     })(jQuery);
