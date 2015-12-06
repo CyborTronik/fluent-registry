@@ -34,6 +34,7 @@ public class Application {
 
         CompaniesController companiesController = injector.getInstance(CompaniesController.class);
         get("/companies", ACCEPT_TYPE,(companiesController::getCompanies), jsonTransformer::toJson);
+        put("/companies", ACCEPT_TYPE,(companiesController::create), jsonTransformer::toJson);
 
         UsersController usersController = injector.getInstance(UsersController.class);
         get("/users", ACCEPT_TYPE, (usersController::getUsers), jsonTransformer::toJson);

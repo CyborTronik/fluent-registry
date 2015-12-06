@@ -13,4 +13,6 @@ public interface CompanyService {
     void deleteAll();
 
     void createCompany(String companyName);
+
+    Company createCompany(Company company);
 }

@@ -1,7 +1,6 @@
 package com.github.cybortronik.registry.repository.sql2o;
 
 import com.github.cybortronik.registry.bean.Company;
-import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.repository.CompanyRepository;
 import com.github.cybortronik.registry.repository.bean.FilterRequest;
 import com.github.cybortronik.registry.repository.bean.FilterResult;
@@ -30,18 +29,18 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
 
     @Override
-    public Company findById(UUID uuid) {
-        return null;
+    public Company findById(String uuid) {
+        return dbExecutor.findById(TABLE_NAME, uuid, Company.class);
     }
 
     @Override
     public void disable(Company entity) {
-
+        disableById(entity.getId());
     }
 
     @Override
-    public void disableById(UUID uuid) {
-
+    public void disableById(String uuid) {
+        dbExecutor.disableById(TABLE_NAME, uuid);
     }
 
     @Override
@@ -59,8 +58,21 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     }
 
     @Override
-    public FilterResult<Company> filter(FilterRequest filterRequest) {
+    public String createCompany(Company company) {
+        UUID uuid = UUID.randomUUID();
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", uuid.toString());
+        params.put("name", company.getName());
+        params.put("description", company.getDescription());
+        String details = company.getDetails() != null ? company.getDetails().toString() : null;
+        params.put("details", details);
+        params.put("logoPath", company.getLogoPath());
+        dbExecutor.execute("insert into companies (id, name, description, details, logoPath, createdAt, updatedAt) VALUES (:id, :name, :description, :details, :logoPath, NULL, NULL)", params);
+        return uuid.toString();
+    }
 
+    @Override
+    public FilterResult<Company> filter(FilterRequest filterRequest) {
         int limit = filterRequest.getLimit();
         if (limit <= 0)
             throw new IllegalArgumentException("Cannot filter for items less or equals to zero");

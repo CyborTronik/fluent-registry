@@ -6,6 +6,7 @@ import com.github.cybortronik.registry.repository.bean.FilterRequest;
 import com.github.cybortronik.registry.repository.bean.FilterResult;
 
 import javax.inject.Inject;
+import java.util.UUID;
 
 /**
  * Created by stanislav on 11/30/15.
@@ -32,5 +33,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void createCompany(String companyName) {
         companyRepository.createCompany(companyName);
+    }
+
+    @Override
+    public Company createCompany(Company company) {
+        String uuid = companyRepository.createCompany(company);
+        return companyRepository.findById(uuid);
     }
 }

@@ -9,8 +9,10 @@ import java.util.UUID;
 /**
  * Created by stanislav on 11/17/15.
  */
-public interface CompanyRepository extends Repository<Company, UUID> {
+public interface CompanyRepository extends Repository<Company, String> {
     FilterResult<Company> filter(FilterRequest filterRequest);
 
     void createCompany(String companyName);
+
+    String createCompany(Company company);
 }

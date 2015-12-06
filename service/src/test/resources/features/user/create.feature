@@ -3,7 +3,7 @@ Feature: Create users
 
   Background: Setup database
     Given database has no users.
-    And clear received JWT
+    And no received JWT
 
   Scenario: Create user without being logged in
     When request user creation for: john@carter.com with password "an0nymus" as John Carter

@@ -67,7 +67,7 @@ public class RestStepdefs {
         return new StrSubstitutor(variables).replace(url);
     }
 
-    @When("clear received JWT")
+    @When("no received JWT")
     public void clearJwt() {
         jwt = null;
     }
