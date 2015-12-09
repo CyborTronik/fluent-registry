@@ -41,19 +41,17 @@
 </script>
 
 <script type="text/template" id="tpl_scenario">
-    <% if (keyword !== "Background" || (keyword == "Background" && status != "passed")) { %>
-    <div class="<%=type%> panel panel-<%=panel_type%>">
+    <div class="<%=type%> panel-<%=panel_type%>">
         <div class="panel-heading">
             <% if (keyword == "Background") { %>
-            <strong><%=keyword%>: </strong>
+            <strong>Prerequisites </strong>
             <% } %>
-            <%=name%>
+            <p><%=name%></p>
         </div>
         <div class="step_list panel-body" id="scenario<%=line%>">
 
         </div>
     </div>
-    <% } %>
 </script>
 
 <script type="text/template" id="tpl_feature">
@@ -66,12 +64,37 @@
             </p>
             <br/>
         </div>
-    </div>
+
+        <div class="prerequisite_list" id="prerequisite<%=id%>"></div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 align="center">
+                            Contents
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <% for (var i=0; i< elements.length; i++) { %>
+                                <% if (elements[i].keyword !== "Background") { %>
+                                        <li>
+                                            <%=elements[i].name%>
+                                            <% if (elements[i].status != "passed") { %>
+                                                <span class="badge"><%=elements[i].status%></span>
+                                            <% } %>
+                                        </li>
+                                <% } %>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+
     <div class="scenario_list" id="feature<%=id%>"></div>
 </script>
 
 <script type="text/template" id="tpl_feature_summary">
-    <li class="list-group-item">
+    <li>
         <a href="#feature/<%=name%>"><%=name%></a>
         <span>
             <% if (failedCount > 0) { %>
@@ -96,18 +119,16 @@
     </div>
 
 
-    <div class="panel-body">
-        <div class="panel panel-default">
+        <div class="panel-default">
             <div class="panel-heading">
                 <h2 align="center">
                     Contents
                 </h2>
             </div>
             <div class="panel-body">
-                <ul class="feature_list list-group"></ul>
+                <ul class="feature_list"></ul>
             </div>
         </div>
-    </div>
 </script>
 
 <div class="container">
@@ -230,7 +251,11 @@
             render_scenario: function (scenario, model_id) {
                 var scenario_view = new $.ScenarioView({model: scenario});
                 console.log("Append scenario for " + this.model_id);
-                this.$('#feature' + model_id).append($(scenario_view.render()));
+                if (scenario.keyword == "Background") {
+                    this.$('#prerequisite' + model_id).append($(scenario_view.render()));
+                }else {
+                    this.$('#feature' + model_id).append($(scenario_view.render()));
+                }
             }
         });
 
@@ -311,7 +336,18 @@
         });
 
         function computeFeatureStatistics(feature) {
+            if (feature.elements.length == 0)
+                return;
             feature.elements.forEach(computeScenarioStatistics);
+            var newElements = [feature.elements[0]];
+            for (var i=1; i<feature.elements.length; i++) {
+                var elmnt = feature.elements[i];
+                if (elmnt.keyword !== "Background" || (elmnt.status != "passed")) {
+                    newElements.push(elmnt);
+                }
+            }
+            feature.elements = newElements;
+
             var scenarios = Enumerable.From(feature.elements).Where(function (x) {
                 return x.type == 'scenario';
             });
@@ -345,7 +381,7 @@
                 return;
             }
             scenario.status = "passed";
-            scenario.panel_type = "info";
+            scenario.panel_type = scenario.keyword == "Background"? "info" : "default";
         }
 
         function hasStepWithStatus(scenario, stauts) {
