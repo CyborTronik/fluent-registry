@@ -6,7 +6,8 @@ import com.github.cybortronik.registry.repository.bean.FilterRequest;
 import com.github.cybortronik.registry.repository.bean.FilterResult;
 
 import javax.inject.Inject;
-import java.util.UUID;
+
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * Created by stanislav on 11/30/15.
@@ -39,5 +40,23 @@ public class CompanyServiceImpl implements CompanyService {
     public Company createCompany(Company company) {
         String uuid = companyRepository.createCompany(company);
         return companyRepository.findById(uuid);
+    }
+
+    @Override
+    public Company updateCompany(String companyUuid, Company company) {
+        if (isNotBlank(company.getName()))
+            companyRepository.updateName(companyUuid, company.getName());
+        if (isNotBlank(company.getLogoPath()))
+            companyRepository.updateLogoPath(companyUuid, company.getLogoPath());
+        if (isNotBlank(company.getDescription()))
+            companyRepository.updateDescription(companyUuid, company.getDescription());
+        if (company.getDetails() != null)
+            companyRepository.updateDetails(companyUuid, company.getDetails().toString());
+        return companyRepository.findById(companyUuid);
+    }
+
+    @Override
+    public Company findById(String companyId) {
+        return companyRepository.findById(companyId);
     }
 }

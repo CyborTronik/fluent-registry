@@ -10,7 +10,10 @@ import spark.Request;
 import spark.Response;
 
 import javax.inject.Inject;
-import java.util.List;
+
+import static java.util.Objects.isNull;
+import static org.eclipse.jetty.util.StringUtil.isBlank;
+import static spark.Spark.halt;
 
 /**
  * Created by stanislav on 11/17/15.
@@ -37,5 +40,35 @@ public class CompaniesController {
         String body = request.body();
         Company company = jsonTransformer.fromJson(body, Company.class);
         return companyService.createCompany(company);
+    }
+
+    public Company show(Request request, Response response) {
+        String companyId = getCompanyUuid(request);
+        Company updatedCompany = companyService.findById(companyId);
+        requiredCompany(updatedCompany);
+        return updatedCompany;
+    }
+
+    public Company update(Request request, Response response) {
+        String companyId = getCompanyUuid(request);
+        String body = request.body();
+        Company company = jsonTransformer.fromJson(body, Company.class);
+        Company updatedCompany = companyService.updateCompany(companyId, company);
+        requiredCompany(updatedCompany);
+        return updatedCompany;
+    }
+
+    private String getCompanyUuid(Request request) {
+        String uuid = request.params(":uuid");
+        if (isBlank(uuid)) {
+            halt(400, "Cannot find a company without identifier");
+        }
+        return uuid;
+    }
+
+
+    private void requiredCompany(Company company) {
+        if (isNull(company))
+            halt(400, "Company not found please check the request");
     }
 }

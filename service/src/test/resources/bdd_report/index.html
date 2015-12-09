@@ -35,7 +35,7 @@
         </button>
 
         <h4>Error details:</h4>
-        <p><%=result.error_message.replace("\n\t", "<br />").replace("java.lang.AssertionError: ", "")%></p>
+        <pre><%=result.error_message.replace("\n\t", "<br />").replace("java.lang.AssertionError: ", "")%></pre>
     </div>
     <% } %>
 </script>

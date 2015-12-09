@@ -57,6 +57,12 @@ public class RestStepdefs {
         variables.put("userId", user.getId());
     }
 
+    @But("persist id variable")
+    public void persistId() {
+        LOGGER.info("Try find id from " + response.asString());
+        variables.put("id", response.jsonPath().getString("id"));
+    }
+
     @When("post (.*) with (.*)")
     public void post(String url, String body) {
         String preparedUrl = processUrl(url);
@@ -101,6 +107,7 @@ public class RestStepdefs {
 
     @Then("^response code is (\\d+)")
     public void checkResponseCode(int responseCode) {
+        LOGGER.info("Check status code having result:  " + response.asString());
         response.then().statusCode(responseCode);
     }
 

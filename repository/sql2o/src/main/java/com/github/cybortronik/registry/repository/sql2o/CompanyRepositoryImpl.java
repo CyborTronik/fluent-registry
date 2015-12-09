@@ -72,6 +72,38 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     }
 
     @Override
+    public void updateName(String uuid, String companyName) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", uuid);
+        params.put("name", companyName);
+        dbExecutor.execute("update companies set name=:name where id=:id", params);
+    }
+
+    @Override
+    public void updateLogoPath(String companyUuid, String logoPath) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", companyUuid);
+        params.put("logoPath", logoPath);
+        dbExecutor.execute("update companies set logoPath=:logoPath where id=:id", params);
+    }
+
+    @Override
+    public void updateDescription(String companyUuid, String description) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", companyUuid);
+        params.put("description", description);
+        dbExecutor.execute("update companies set description=:description where id=:id", params);
+    }
+
+    @Override
+    public void updateDetails(String companyUuid, String details) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", companyUuid);
+        params.put("details", details);
+        dbExecutor.execute("update companies set details=:details where id=:id", params);
+    }
+
+    @Override
     public FilterResult<Company> filter(FilterRequest filterRequest) {
         int limit = filterRequest.getLimit();
         if (limit <= 0)

@@ -15,4 +15,12 @@ public interface CompanyRepository extends Repository<Company, String> {
     void createCompany(String companyName);
 
     String createCompany(Company company);
+
+    void updateName(String uuid, String companyName);
+
+    void updateLogoPath(String companyUuid, String logoPath);
+
+    void updateDescription(String companyUuid, String description);
+
+    void updateDetails(String companyUuid, String details);
 }

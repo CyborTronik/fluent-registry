@@ -15,4 +15,8 @@ public interface CompanyService {
     void createCompany(String companyName);
 
     Company createCompany(Company company);
+
+    Company updateCompany(String companyUuid, Company company);
+
+    Company findById(String companyId);
 }
