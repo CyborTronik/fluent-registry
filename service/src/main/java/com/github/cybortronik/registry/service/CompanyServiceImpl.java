@@ -59,4 +59,9 @@ public class CompanyServiceImpl implements CompanyService {
     public Company findById(String companyId) {
         return companyRepository.findById(companyId);
     }
+
+    @Override
+    public void delete(String companyId) {
+        companyRepository.disableById(companyId);
+    }
 }

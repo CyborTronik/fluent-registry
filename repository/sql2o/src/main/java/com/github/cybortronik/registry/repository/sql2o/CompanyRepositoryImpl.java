@@ -133,11 +133,11 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     }
 
     private String computeFilterQuery(FilterRequest filterRequest) {
-        String sql = "select * from companies ";
+        String sql = "select * from companies where enabled=1 ";
         String query = filterRequest.getQuery();
         if (isNotBlank(query)) {
             String safeQuery = filterInjectionValue(query);
-            sql += " WHERE name like '%" + safeQuery + "%' OR description like '%" + safeQuery + "%' ";
+            sql += " AND name like '%" + safeQuery + "%' OR description like '%" + safeQuery + "%' ";
         }
         return sql;
     }

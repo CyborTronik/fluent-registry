@@ -13,6 +13,6 @@ Feature: Delete users
     When delete /users/no_id
     Then response code is 400
 
-  Scenario: Delete non existed user
+  Scenario: Delete existing user
     When delete /users/${userId}
     Then response code is 204

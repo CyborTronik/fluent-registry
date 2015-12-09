@@ -19,4 +19,6 @@ public interface CompanyService {
     Company updateCompany(String companyUuid, Company company);
 
     Company findById(String companyId);
+
+    void delete(String companyId);
 }

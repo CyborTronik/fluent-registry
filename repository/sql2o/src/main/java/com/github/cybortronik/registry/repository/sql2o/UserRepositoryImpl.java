@@ -144,11 +144,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private String computeFilterQuery(FilterRequest filterRequest) {
-        String sql = "select * from users ";
+        String sql = "select * from users where enabled=1 ";
         String query = filterRequest.getQuery();
         if (isNotBlank(query)) {
             String safeQuery = filterInjectionValue(query);
-            sql += " WHERE displayName like '%" + safeQuery + "%' OR email like '%" + safeQuery + "%' ";
+            sql += " AND displayName like '%" + safeQuery + "%' OR email like '%" + safeQuery + "%' ";
         }
         return sql;
     }

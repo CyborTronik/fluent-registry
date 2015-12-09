@@ -42,6 +42,14 @@ public class CompaniesController {
         return companyService.createCompany(company);
     }
 
+    public String delete(Request request, Response response) {
+        String companyId = getCompanyUuid(request);
+        companyService.delete(companyId);
+        requiredCompany(companyService.findById(companyId));
+        halt(204);
+        return "";
+    }
+
     public Company show(Request request, Response response) {
         String companyId = getCompanyUuid(request);
         Company updatedCompany = companyService.findById(companyId);
