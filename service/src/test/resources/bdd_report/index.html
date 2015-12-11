@@ -67,20 +67,21 @@
 
         <div class="prerequisite_list" id="prerequisite<%=id%>"></div>
 
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <h2 align="center">
-                            Contents
+                            List of scenarios
                         </h2>
                     </div>
                     <div class="panel-body">
+                        <br />
                         <ul>
                             <% for (var i=0; i< elements.length; i++) { %>
                                 <% if (elements[i].keyword !== "Background") { %>
                                         <li>
                                             <%=elements[i].name%>
                                             <% if (elements[i].status != "passed") { %>
-                                                <span class="badge"><%=elements[i].status%></span>
+                                                <span class="label label-<%= elements[i].panel_type %>"><%=elements[i].status%></span>
                                             <% } %>
                                         </li>
                                 <% } %>
@@ -98,10 +99,10 @@
         <a href="#feature/<%=name%>"><%=name%></a>
         <span>
             <% if (failedCount > 0) { %>
-                <span class="badge"><%=failedCount%> fails</span>
+                <span class="label label-danger"><%=failedCount%> fails</span>
             <% } %>
             <% if (otherCount > 0) { %>
-                <span class="badge"><%=otherCount%> skipped</span>
+                <span class="label label-warning"><%=otherCount%> skipped</span>
             <% } %>
         </span>
     </li>
