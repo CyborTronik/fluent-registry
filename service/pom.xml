@@ -225,6 +225,9 @@
                                 <ports>
                                     <port>8080:4567</port>
                                 </ports>
+                                <links>
+                                    <link>registry-db</link>
+                                </links>
                                 <wait>
                                     <log>INFO org.eclipse.jetty.server.Server - Started
                                     </log>
