@@ -67,9 +67,9 @@ Feature: Listing users
     When get /users?orderBy=email%20desc
     Then response code is 200
     And response list counts 3
-    And response item 1 contains email stanislav@trifan.com
+    And response item 1 contains email test3@trifan.com
     And response item 2 contains email test2@trifan.com
-    And response item 3 contains email test3@trifan.com
+    And response item 3 contains email stanislav@trifan.com
 
   Scenario: Pagination feature
     Given having account test1@trifan.com with password 's3cr3t'

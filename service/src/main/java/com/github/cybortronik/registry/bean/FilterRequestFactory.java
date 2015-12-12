@@ -25,9 +25,9 @@ public class FilterRequestFactory {
         displayName = urlDecoder.decode(displayName);
         filterRequest.setQuery(displayName);
 
-        String sortBy = request.queryParams("sortBy");
-        sortBy = urlDecoder.decode(sortBy);
-        filterRequest.setSortBy(sortBy);
+        String orderBy = request.queryParams("orderBy");
+        orderBy = urlDecoder.decode(orderBy);
+        filterRequest.setOrderBy(orderBy);
 
         String page = request.queryParams("page");
         if (page != null)

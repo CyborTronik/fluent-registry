@@ -3,6 +3,8 @@ package features;
 import com.github.cybortronik.registry.bean.User;
 import com.github.cybortronik.registry.repository.bean.FilterRequest;
 import com.github.cybortronik.registry.repository.UserRepository;
+import com.github.cybortronik.registry.repository.bean.FilterResult;
+import com.google.gson.Gson;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -24,6 +26,7 @@ public class UserStepdefs {
     private UserRepository userRepository;
     private User user;
     private List<User> userList;
+    private String json;
 
     @Inject
     public UserStepdefs(UserRepository userRepository) {
@@ -70,13 +73,25 @@ public class UserStepdefs {
     @When("list users ordered by display name (.*)")
     public void listUsersOrderedByDisplayName(String orderDirection) {
         FilterRequest filterRequest = new FilterRequest();
-        filterRequest.setSortBy("displayName " + orderDirection);
-        userList = userRepository.filter(filterRequest).getEntities();
+        filterRequest.setOrderBy("displayName " + orderDirection);
+        FilterResult<User> filter = userRepository.filter(filterRequest);
+        userList = filter.getEntities();
     }
 
     @Then("user number (.*) has display name (.*)")
     public void checkUserForIndex(int index, String displayName) {
         User user = userList.get(index - 1);
         assertEquals(displayName, user.getDisplayName());
+    }
+
+    @When("user list is translated to JSON")
+    public void userListToJson() {
+        json = new Gson().toJson(userList);
+    }
+
+    @Then("JSON matches (.*)")
+    public void checkJsonMatch(String regExp) {
+        boolean matches = json.matches(regExp);
+        assertTrue("Didn't matched for " + json, matches);
     }
 }

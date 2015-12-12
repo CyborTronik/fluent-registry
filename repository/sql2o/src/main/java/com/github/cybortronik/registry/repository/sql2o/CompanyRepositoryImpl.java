@@ -125,8 +125,8 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     }
 
     private String computePageView(FilterRequest filterRequest, int limit, String sql) {
-        if (isNotBlank(filterRequest.getSortBy()))
-            sql += " ORDER BY " + filterInjectionValue(filterRequest.getSortBy());
+        if (isNotBlank(filterRequest.getOrderBy()))
+            sql += " ORDER BY " + filterInjectionValue(filterRequest.getOrderBy());
         int offset = filterRequest.getPage() * limit;
         sql += " LIMIT " + offset + "," + limit;
         return sql;

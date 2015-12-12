@@ -7,7 +7,7 @@ public class FilterRequest {
     public static final int MAX_ITEMS_PER_PAGE = 250;
     public static final int MIN_ITEMS_PER_PAGE = 5;
     private String query;
-    private String sortBy;
+    private String orderBy;
     private int page;
     private int limit = 50;
 
@@ -19,12 +19,12 @@ public class FilterRequest {
         this.query = query;
     }
 
-    public String getSortBy() {
-        return sortBy;
+    public String getOrderBy() {
+        return orderBy;
     }
 
-    public void setSortBy(String sortBy) {
-        this.sortBy = sortBy;
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
     }
 
     public int getPage() {
