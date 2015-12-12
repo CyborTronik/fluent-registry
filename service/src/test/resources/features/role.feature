@@ -1,5 +1,4 @@
-Feature: Manage roles
-
+Feature: Role Management
 
   Background: Clean database
     Given no roles in database.

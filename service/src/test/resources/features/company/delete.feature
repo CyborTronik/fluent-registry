@@ -1,4 +1,4 @@
-Feature: Delete companies
+Feature: Company Management: Delete companies
 
   Background: Setup database
     Given database has no users.

@@ -1,4 +1,4 @@
-Feature: Listing users
+Feature: User Management: Listing users
   As a manager I should be able to list current users with or without filtering and sorting options
 
   Background: Setup database

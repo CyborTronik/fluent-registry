@@ -1,4 +1,4 @@
-Feature: Show company details
+Feature: Company Management: Show company details
   As a manager I would like to see company details based on company ID
 
   Background: Setup database

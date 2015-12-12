@@ -1,4 +1,4 @@
-Feature: Create companies
+Feature: Company Management: Create companies
   As a manager I must able to create new organisation group.
 
 
