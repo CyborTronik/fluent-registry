@@ -1,4 +1,4 @@
-Feature: User Management: Show user details
+Feature: User Management - Show user details
   As a manager I would like to see user details based on user ID
 
   Background: Setup database

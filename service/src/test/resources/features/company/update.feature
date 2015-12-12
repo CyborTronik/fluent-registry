@@ -1,4 +1,4 @@
-Feature: Company Management: Update company details
+Feature: Company Management - Update company details
   As a manager I should be able to update company details
 
   Background: Setup database

@@ -1,4 +1,4 @@
-Feature: User Management: Update users
+Feature: User Management - Update users
 
   Background: Setup database
     Given database has no users.

@@ -1,4 +1,4 @@
-Feature: Company Management: List companies
+Feature: Company Management - List companies
   As a manager I must able to list all companies considering filtering, ordering and pagination.
 
 

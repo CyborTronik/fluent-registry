@@ -1,4 +1,4 @@
-Feature: User Management: Delete users
+Feature: User Management - Delete users
 
   Background: Setup database
     Given database has no users.
