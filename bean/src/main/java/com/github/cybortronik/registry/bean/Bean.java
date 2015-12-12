@@ -7,8 +7,8 @@ import java.time.OffsetDateTime;
  */
 public abstract class Bean {
     private String id;
-    private transient OffsetDateTime createdAt;
-    private transient OffsetDateTime updatedAt;
+    private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
     private boolean enabled;
 
     public String getId() {

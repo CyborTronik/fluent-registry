@@ -95,7 +95,6 @@
 </script>
 
 <script type="text/template" id="tpl_feature_summary">
-    <li>
         <a href="#feature/<%=name%>"><%=name%></a>
         <span>
             <% if (failedCount > 0) { %>
@@ -105,17 +104,11 @@
                 <span class="label label-warning"><%=otherCount%> skipped</span>
             <% } %>
         </span>
-    </li>
 </script>
 
 <script type="text/template" id="tpl_features">
     <div class="jumbotron">
-        <p class="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tortor nisi, faucibus vel lacinia congue, varius tincidunt dui.
-            Etiam mauris orci, tempus quis sapien vel, pellentesque luctus massa. Donec dictum dignissim iaculis. Pellentesque dapibus ullamcorper velit,
-            ac condimentum justo gravida quis. Sed sed sapien vitae mi tristique ultrices. Donec volutpat gravida quam, at commodo neque pellentesque non.
-            Suspendisse sit amet metus enim. Vivamus congue lectus vitae felis blandit egestas. Nullam sed commodo eros, quis accumsan velit.
-            Donec pellentesque massa nec enim tincidunt, at tincidunt ex fermentum. Ut non magna lobortis leo fringilla cursus.
+        <p class="lead" id="abstract">
         </p>
     </div>
 
@@ -261,7 +254,7 @@
         });
 
         $.FeatureSummaryView = Backbone.View.extend({
-            tagName: 'tr',
+            tagName: 'li',
             initialize: function () {
                 this.render();
             },
@@ -334,6 +327,10 @@
 
             var router = new Router();
             Backbone.history.start();
+        });
+
+        jQuery.get('abstract.txt', function(data) {
+            $("#abstract").html(data);
         });
 
         function computeFeatureStatistics(feature) {
