@@ -28,6 +28,7 @@ public class Application {
 
         AuthController authController = injector.getInstance(AuthController.class);
         before("/users", ((request, response) -> authController.authenticate(request, response, Roles.MANAGE_USERS)));
+        before("/roles", ((request, response) -> authController.authenticate(request, response, Roles.MANAGE_ROLES)));
         before("/companies", ((request, response) -> authController.authenticate(request, response, Roles.MANAGE_COMPANIES)));
         post("/login", ACCEPT_TYPE, (authController::login), jsonTransformer::toJson);
 

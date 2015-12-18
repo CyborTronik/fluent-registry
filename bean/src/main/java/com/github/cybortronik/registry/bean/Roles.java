@@ -5,5 +5,6 @@ package com.github.cybortronik.registry.bean;
  */
 public enum Roles {
     MANAGE_USERS,
+    MANAGE_ROLES,
     MANAGE_COMPANIES
 }
