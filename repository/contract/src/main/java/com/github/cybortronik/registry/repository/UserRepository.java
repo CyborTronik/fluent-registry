@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public interface UserRepository extends Repository<User, String> {
 
-    UUID createUser(String displayName, String email, String passwordHash, String details);
+    UUID createUser(String displayName, String email, String passwordHash, String details, String companyId);
 
     User findByEmail(String email);
 
@@ -32,4 +32,6 @@ public interface UserRepository extends Repository<User, String> {
     UUID createUser(String displayName, String email, String passwordHash);
 
     void updateDetails(String uuid, JsonElement details);
+
+    void updateCompanyId(String uuid, String companyId);
 }

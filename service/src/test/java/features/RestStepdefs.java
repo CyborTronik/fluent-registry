@@ -19,7 +19,6 @@ import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import static com.jayway.restassured.RestAssured.given;
 import static java.lang.String.format;
@@ -60,16 +59,17 @@ public class RestStepdefs {
     @But("persist id variable")
     public void persistId() {
         LOGGER.info("Try find id from " + response.asString());
-        variables.put("id", response.jsonPath().getString("id"));
+        String id = response.jsonPath().getString("id");
+        variables.put("id", id);
     }
 
     @When("post (.*) with (.*)")
     public void post(String url, String body) {
-        String preparedUrl = processUrl(url);
-        response = given().body(body).post(preparedUrl);
+        String preparedUrl = processVariables(url);
+        response = given().body(processVariables(body)).post(preparedUrl);
     }
 
-    private String processUrl(String url) {
+    private String processVariables(String url) {
         return new StrSubstitutor(variables).replace(url);
     }
 
@@ -80,7 +80,7 @@ public class RestStepdefs {
 
     @When("get (.*)")
     public void get(String url) {
-        response = call().get(processUrl(url));
+        response = call().get(processVariables(url));
         LOGGER.info(response.asString());
     }
 
@@ -94,8 +94,9 @@ public class RestStepdefs {
 
     @Then("^response contains: (.*)$")
     public void responseContains(String text) {
+        text = processVariables(text);
         String result = response.asString();
-        assertTrue("Current result doesn't contain requested text. Check please result: " + result, result.contains(text));
+        assertTrue("Current result doesn't contain requested text (" + text + "). Check please the result: " + result, result.contains(text));
     }
 
     @When("login as (.*) with password '(.*)'")
@@ -149,12 +150,12 @@ public class RestStepdefs {
 
     @When("put (.*) with (.*)")
     public void put(String url, String body) {
-        response = call().body(body).put(processUrl(url));
+        response = call().body(processVariables(body)).put(processVariables(url));
     }
 
     @When("delete (.*)")
     public void delete(String url) {
-        response = call().delete(processUrl(url));
+        response = call().delete(processVariables(url));
     }
 
     @Then("response list counts (.*)")

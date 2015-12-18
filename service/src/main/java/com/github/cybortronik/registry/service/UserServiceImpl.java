@@ -48,9 +48,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UUID createUser(String displayName, String email, String password, String details) {
+    public UUID createUser(String displayName, String email, String password, String details, String companyId) {
         String encryptedPassword = passwordEncryptor.encryptPassword(password);
-        return userRepository.createUser(displayName, email, encryptedPassword, details);
+        return userRepository.createUser(displayName, email, encryptedPassword, details, companyId);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
         passwordsMustMatch(userRequest);
         JsonElement jsonElement = userRequest.getDetails();
         String details = jsonElement == null? null : jsonElement.toString();
-        UUID uuid = createUser(userRequest.getDisplayName(), userRequest.getEmail(), userRequest.getPassword(), details);
+        UUID uuid = createUser(userRequest.getDisplayName(), userRequest.getEmail(), userRequest.getPassword(), details, userRequest.getCompanyId());
         String userId = uuid.toString();
         if (userRequest.getRoles() != null)
             userRequest.getRoles().forEach(role -> userRepository.addUserRole(userId, role));
@@ -84,6 +84,9 @@ public class UserServiceImpl implements UserService {
             userRepository.updateEmail(uuid, request.getEmail());
         if (request.getRoles() != null)
             userRepository.setRoles(uuid, request.getRoles());
+        if (isNotBlank(request.getCompanyId()))
+            userRepository.updateCompanyId(uuid, request.getCompanyId());
+
         if (isNotBlank(request.getPassword())) {
             passwordsMustMatch(request);
             String encryptedPassword = passwordEncryptor.encryptPassword(request.getPassword());
@@ -107,7 +110,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(String displayName, String email, String password) {
-        createUser(displayName, email, password, null);
+        createUser(displayName, email, password, null, null);
     }
 
 }

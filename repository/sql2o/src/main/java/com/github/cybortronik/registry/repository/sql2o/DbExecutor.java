@@ -5,13 +5,12 @@ import com.github.cybortronik.registry.bean.User;
 import org.sql2o.Connection;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
+import org.sql2o.Sql2oException;
 
 import javax.inject.Inject;
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static java.util.Objects.nonNull;
@@ -68,6 +67,9 @@ public class DbExecutor {
                 query = query.addParameter(entry.getKey(), entry.getValue());
             query.executeUpdate();
             con.commit();
+        } catch (Sql2oException e) {
+            String joinParams = String.join(",", params.entrySet().stream().map(Object::toString).collect(Collectors.toList()));
+            throw new RuntimeException("Exception for " + sql + " with params: " + joinParams, e);
         }
     }
 

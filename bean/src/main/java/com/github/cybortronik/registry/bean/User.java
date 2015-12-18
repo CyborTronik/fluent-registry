@@ -15,6 +15,7 @@ public class User extends Bean {
     private transient String passwordHash;
     private Set<String> roles;
     private JsonElement details;
+    private String companyId;
 
     public String getDisplayName() {
         return displayName;
@@ -82,5 +83,13 @@ public class User extends Bean {
 
     public void setDetails(JsonElement details) {
         this.details = details;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 }

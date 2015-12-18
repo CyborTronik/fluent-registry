@@ -50,3 +50,13 @@ Feature: User Management - Update users
     When post /users/${userId} with { details: { gender: "male"} }
     Then response code is 200
     And response contains: "details":{"gender":"male"}
+
+  Scenario: Change user company
+    Given stanislav@trifan.com has MANAGE_COMPANIES role
+    And login as stanislav@trifan.com with password 's3cr3t'
+    And no any company
+    But put /companies with { name: "MegaCom", logoPath:"http://url.any", description: "Any description" }
+    And persist id variable
+    When post /users/${userId} with { companyId: "${id}" }
+    Then response code is 200
+    And response contains: "companyId":"${id}"

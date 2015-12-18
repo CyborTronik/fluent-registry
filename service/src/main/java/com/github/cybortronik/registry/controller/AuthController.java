@@ -71,11 +71,7 @@ public class AuthController {
     public void authenticate(Request request, Response response) throws MalformedClaimException {
         User user  = request.session().attribute("user");
         if (user == null) {
-            Set<String> headers = request.headers();
-            String headersDesc = String.join(",", headers);
-            LOGGER.info("Requested headers: " + headersDesc);
             String jwt = request.headers("JWT");
-            LOGGER.info("Got JWT: " + jwt);
             if (isNotBlank(jwt)) {
                 processJwtToken(request, jwt);
             } else {

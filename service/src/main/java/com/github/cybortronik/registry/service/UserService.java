@@ -18,7 +18,7 @@ public interface UserService {
 
     User find(Login login);
 
-    UUID createUser(String displayName, String email, String password, String details);
+    UUID createUser(String displayName, String email, String password, String details, String companyId);
 
     User createUser(UserRequest userRequest);
 

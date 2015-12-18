@@ -15,6 +15,7 @@ public class UserRequest {
     private String passwordConfirmation;
     private JsonElement details;
     private List<String> roles;
+    private String companyId;
 
     public String getDisplayName() {
         return displayName;
@@ -62,5 +63,13 @@ public class UserRequest {
 
     public void setDetails(JsonElement details) {
         this.details = details;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
     }
 }

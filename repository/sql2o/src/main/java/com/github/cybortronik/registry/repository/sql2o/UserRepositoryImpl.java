@@ -50,7 +50,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public UUID createUser(String displayName, String email, String passwordHash, String details) {
+    public UUID createUser(String displayName, String email, String passwordHash, String details, String companyId) {
         UUID uuid = UUID.randomUUID();
         Map<String, Object> params = new HashMap<>();
         params.put("id", uuid.toString());
@@ -58,7 +58,8 @@ public class UserRepositoryImpl implements UserRepository {
         params.put("email", email);
         params.put("passwordHash", passwordHash);
         params.put("details", details);
-        dbExecutor.execute("INSERT INTO users (id, displayName, email, passwordHash, details, createdAt, updatedAt) VALUES(:id, :displayName, :email, :passwordHash, :details, NULL, NULL)", params);
+        params.put("companyId", companyId);
+        dbExecutor.execute("INSERT INTO users (id, displayName, email, passwordHash, details, companyId, createdAt, updatedAt) VALUES(:id, :displayName, :email, :passwordHash, :details, :companyId, NULL, NULL)", params);
         return uuid;
     }
 
@@ -155,7 +156,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public UUID createUser(String displayName, String email, String passwordHash) {
-        return createUser(displayName, email, passwordHash, null);
+        return createUser(displayName, email, passwordHash, null, null);
     }
 
     @Override
@@ -164,6 +165,14 @@ public class UserRepositoryImpl implements UserRepository {
         params.put("id", uuid);
         params.put("details", details.toString());
         dbExecutor.execute("update users set details=:details where id = :id", params);
+    }
+
+    @Override
+    public void updateCompanyId(String uuid, String companyId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", uuid);
+        params.put("companyId", companyId);
+        dbExecutor.execute("update users set companyId=:companyId where id=:id", params);
     }
 
     private void deleteRole(String uuid, String role) {

@@ -3,9 +3,9 @@ Feature: Company Management - Create companies
 
 
   Background:
-    Given no any company
-    And no received JWT
+    Given no received JWT
     And database has no users.
+    And no any company
 
 
   Scenario: Not allowed to create a company if user is not logged in

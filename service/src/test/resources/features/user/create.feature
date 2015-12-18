@@ -41,3 +41,15 @@ Feature: User Management - Create users
     And response contains: "displayName":"John Carter"
     And response contains: "details":{"gender":"male"}
 
+  Scenario: Create user with company ID
+    Given having account stanislav@trifan.com with password 's3cr3t'
+    And stanislav@trifan.com has MANAGE_USERS role
+    And stanislav@trifan.com has MANAGE_COMPANIES role
+    And login as stanislav@trifan.com with password 's3cr3t'
+    And no any company
+    But put /companies with { name: "MegaCom", logoPath:"http://url.any", description: "Any description" }
+    And persist id variable
+    When put /users with { email:"john@carter.com", displayName:"John Carter", password: "password", passwordConfirmation: "password", companyId: "${id}" }
+    Then response code is 200
+    And response contains: "companyId":"${id}"
+
