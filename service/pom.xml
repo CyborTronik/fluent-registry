@@ -284,6 +284,22 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.github.cybortronik</groupId>
+                <artifactId>cucumber-jvm-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-document</id>
+                        <goals>
+                            <goal>document</goal>
+                        </goals>
+                        <phase>post-integration-test</phase>
+                        <configuration>
+                            <path>target/site/documentation</path>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
